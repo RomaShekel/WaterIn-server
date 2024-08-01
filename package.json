@@ -1,0 +1,51 @@
+{
+  "name": "waterin-server",
+  "version": "1.0.0",
+  "description": "Server for WaterIn project",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node src/index.js",
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs"
+  },
+  "keywords": [],
+  "author": "Roman Shekel",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "eslint": "^9.2.0",
+    "globals": "^15.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RomaShekel/WaterIn-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RomaShekel/WaterIn-server/issues"
+  },
+  "homepage": "https://github.com/RomaShekel/WaterIn-server#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.4.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "google-auth-library": "^9.11.0",
+    "handlebars": "^4.7.8",
+    "http": "^0.0.1-security",
+    "http-errors": "^2.0.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.5",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.14",
+    "nodemon": "^3.1.4",
+    "pino": "^9.3.2",
+    "pino-http": "^10.2.0",
+    "pino-pretty": "^11.2.2",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
