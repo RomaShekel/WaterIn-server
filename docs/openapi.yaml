@@ -1,0 +1,28 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: WaterIn server
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description:
+    App for management client contacts
+tags:
+  - name: Users
+    description: Operations about users.
+  - name: Water
+    description: Operations about water.
+  - name: Auth
+    description: Auth operations.
+servers:
+  - url: http://localhost:3000
+  # - url: server path not config yet
+# paths:
+  # /water:
+  # /users:
+  # /auth
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

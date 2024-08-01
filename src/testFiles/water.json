@@ -1,0 +1,53 @@
+[
+    {
+      "userId": "user1",
+      "volume": 250,
+      "drinkTime": "2024-07-03T08:30:00Z"
+    },
+    {
+      "userId": "user2",
+      "volume": 300,
+      "drinkTime": "2024-07-03T09:00:00Z"
+    },
+    {
+      "userId": "user3",
+      "volume": 200,
+      "drinkTime": "2024-07-03T10:00:00Z"
+    },
+    {
+      "userId": "user4",
+      "volume": 350,
+      "drinkTime": "2024-07-03T11:15:00Z"
+    },
+    {
+      "userId": "user5",
+      "volume": 400,
+      "drinkTime": "2024-07-03T12:30:00Z"
+    },
+    {
+      "userId": "user6",
+      "volume": 150,
+      "drinkTime": "2024-07-03T13:45:00Z"
+    },
+    {
+      "userId": "user7",
+      "volume": 500,
+      "drinkTime": "2024-07-03T14:00:00Z"
+    },
+    {
+      "userId": "user8",
+      "volume": 250,
+      "drinkTime": "2024-07-03T15:30:00Z"
+    },
+    {
+      "userId": "user9",
+      "volume": 300,
+      "drinkTime": "2024-07-03T16:45:00Z"
+    },
+    {
+      "userId": "user10",
+      "volume": 350,
+      "drinkTime": "2024-07-03T17:00:00Z"
+    }
+]
+  

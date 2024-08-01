@@ -1,0 +1,103 @@
+[
+    {
+      "email": "user1@example.com",
+      "password": "password1",
+      "name": "Alice",
+      "photo": null,
+      "sportHours": 5,
+      "weight": 55,
+      "waterRate": 2.0,
+      "gender": "woman"
+    },
+    {
+      "email": "user2@example.com",
+      "password": "password2",
+      "name": "Bob",
+      "photo": null,
+      "sportHours": 3,
+      "weight": 75,
+      "waterRate": 1.8,
+      "gender": "man"
+    },
+    {
+      "email": "user3@example.com",
+      "password": "password3",
+      "name": "Carol",
+      "photo": null,
+      "sportHours": 7,
+      "weight": 65,
+      "waterRate": 2.2,
+      "gender": "woman"
+    },
+    {
+      "email": "user4@example.com",
+      "password": "password4",
+      "name": "David",
+      "photo": null,
+      "sportHours": 2,
+      "weight": 85,
+      "waterRate": 1.5,
+      "gender": "man"
+    },
+    {
+      "email": "user5@example.com",
+      "password": "password5",
+      "name": "Eva",
+      "photo": null,
+      "sportHours": 6,
+      "weight": 60,
+      "waterRate": 2.1,
+      "gender": "woman"
+    },
+    {
+      "email": "user6@example.com",
+      "password": "password6",
+      "name": "Frank",
+      "photo": null,
+      "sportHours": 4,
+      "weight": 70,
+      "waterRate": 1.9,
+      "gender": "man"
+    },
+    {
+      "email": "user7@example.com",
+      "password": "password7",
+      "name": "Grace",
+      "photo": null,
+      "sportHours": 5,
+      "weight": 68,
+      "waterRate": 2.0,
+      "gender": "woman"
+    },
+    {
+      "email": "user8@example.com",
+      "password": "password8",
+      "name": "Hank",
+      "photo": null,
+      "sportHours": 3,
+      "weight": 90,
+      "waterRate": 1.6,
+      "gender": "man"
+    },
+    {
+      "email": "user9@example.com",
+      "password": "password9",
+      "name": "Ivy",
+      "photo": null,
+      "sportHours": 8,
+      "weight": 62,
+      "waterRate": 2.3,
+      "gender": "woman"
+    },
+    {
+      "email": "user10@example.com",
+      "password": "password10",
+      "name": "Jack",
+      "photo": null,
+      "sportHours": 2,
+      "weight": 95,
+      "waterRate": 1.5,
+      "gender": "man"
+    }
+  ]
+  
