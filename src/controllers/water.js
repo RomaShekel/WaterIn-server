@@ -6,10 +6,11 @@ import {
 } from '../services/water.js';
 
 export const addWaterController = async (req, res) => {
-  //   const userId = req.user._id;
-  // { ...req.body, userId }
+  const userId = req.user._id;
 
-  const data = await addWaterNote(req.body);
+  console.log('user:', userId);
+
+  const data = await addWaterNote({ ...req.body, userId });
 
   res.status(201).json({
     status: 201,
@@ -19,19 +20,21 @@ export const addWaterController = async (req, res) => {
 };
 
 export const updateWaterController = async (req, res, next) => {
-  console.log('first');
-
   const { waterId } = req.params;
-  console.log(waterId);
-  //   const userId = req.user._id;
-  // {
-  //   _id: waterId, userId;
-  // }
 
-  const data = await updateWaterNote({ _id: waterId }, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const userId = req.user._id;
+
+  const data = await updateWaterNote(
+    {
+      _id: waterId,
+      userId,
+    },
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
 
   if (!data) {
     next(createHttpError(404, `Water note with id ${waterId} not found`));
@@ -47,10 +50,9 @@ export const updateWaterController = async (req, res, next) => {
 
 export const deleteWaterController = async (req, res, next) => {
   const { waterId } = req.params;
-  //   const userId = req.user._id;
-  // { _id: waterId, userId }
+  const userId = req.user._id;
 
-  const data = await deleteWaterNote({ _id: waterId });
+  const data = await deleteWaterNote({ _id: waterId, userId });
 
   if (!data) {
     next(createHttpError(404, `Water note with id ${waterId} not found`));

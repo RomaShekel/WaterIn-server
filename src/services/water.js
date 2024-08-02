@@ -6,7 +6,6 @@ export const addWaterNote = async (note) => {
 };
 
 export const updateWaterNote = async (filter, payload, options) => {
-  console.log(payload);
   const data = await WaterNotesCollection.findOneAndUpdate(filter, payload, {
     ...options,
   });
