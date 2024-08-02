@@ -9,7 +9,7 @@ import {
   updateUserProfileController,
 } from '../controllers/users.js';
 import { updateUserSchema } from '../validations/users.js';
-import { authenticate } from '../middlewares/authentificate.js';
+import { authenticate } from '../middlewares/authenticate.js';
 import upload from '../middlewares/photoUpload.js';
 
 const router = Router();
