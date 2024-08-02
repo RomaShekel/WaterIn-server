@@ -1,6 +1,5 @@
 // src/routers/auth.js
 import { Router } from 'express';
-// import { isValidId } from "../utils/isValidId.js";
 import { validateBody } from '../utils/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
@@ -24,11 +23,16 @@ router.post(
   ctrlWrapper(loginUserController),
 );
 
+
 // router.post(
 //     '/refresh',
 //     ctrlWrapper());
 
-router.post('/logout', ctrlWrapper(logoutUserController));
+
+router.post(
+  '/logout',
+  ctrlWrapper(logoutUserController));
+
 
 // router.post(
 //     '/send-reset-email',
