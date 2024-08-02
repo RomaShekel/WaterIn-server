@@ -1,10 +1,5 @@
-// export const authenticate = (req, res, next) => {
-//   // Установка тестового ID пользователя в запросе
-//   req.user = { _id: '66abf0a59121929ce682c072' }; // Замените на реальный ID из MongoDB
-//   next();
-// };
-
 import createHttpError from 'http-errors';
+
 import { SessionsCollection } from '../db/model/sessions.js';
 import { UsersCollection } from '../db/model/users.js';
 
@@ -36,13 +31,12 @@ export const authenticate = async (req, res, next) => {
 
   if (isAccessTokenExpired) {
     next(createHttpError(401, 'Access token expired'));
-    return;
   }
 
   const user = await UsersCollection.findById(session.userId);
 
   if (!user) {
-    next(createHttpError(401));
+    next(createHttpError(401, 'User not found'));
     return;
   }
 
