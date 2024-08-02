@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint src/**/*.js",
     "build": "npm run build-docs",
     "build-docs": "redocly bundle --ext json -o docs/swagger.json",
     "preview-docs": "redocly preview-docs"
@@ -14,9 +15,10 @@
   "author": "Roman Shekel",
   "license": "ISC",
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
-    "eslint": "^9.2.0",
-    "globals": "^15.1.0"
+    "@eslint/js": "^9.8.0",
+    "eslint": "^9.8.0",
+    "globals": "^15.9.0",
+    "nodemon": "^3.1.4"
   },
   "repository": {
     "type": "git",
@@ -42,7 +44,6 @@
     "mongoose": "^8.4.5",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.14",
-    "nodemon": "^3.1.4",
     "pino": "^9.3.2",
     "pino-http": "^10.2.0",
     "pino-pretty": "^11.2.2",

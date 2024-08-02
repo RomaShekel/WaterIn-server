@@ -14,10 +14,17 @@ const PORT = Number(process.env.PORT) ? Number(process.env.PORT) : 3000;
 export const setupServer = () => {
   const app = express();
 
-  app.use(cors());
+  // Налаштування CORS для дозволу передачи cookies між доменами
+  const corsOptions = {
+    origin: ['http://localhost:5173'], // Вказуємо всі дозволені URL фронтенду
+    credentials: true, // Для передачі cookies та авторизаційних заголовків
+  };
+
+  app.use(cors(corsOptions));
   app.use(
     express.json({
       type: ['application/json', 'application/vnd.api+json'],
+      limit: '100kb',
     }),
   );
   app.use(cookieParser());
