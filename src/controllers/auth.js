@@ -1,11 +1,17 @@
 import createHttpError from 'http-errors';
-import { loginUser, logoutUser, registerUser } from '../services/auth.js';
+import {
+  loginUser,
+  logoutUser,
+  registerUser,
+  refreshUserSession,
+} from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
 
   const session = await loginUser(req.body);
+
   setupSession(res, session);
 
   const data = {
@@ -67,4 +73,34 @@ export const logoutUserController = async (req, res) => {
   });
 
   res.status(204).send();
+};
+
+export const refreshTokenController = async (req, res) => {
+  const { refreshToken, sessionId } = req.cookies;
+
+  if (!refreshToken || !sessionId) {
+    throw createHttpError(400);
+  }
+
+  const session = await refreshUserSession({ sessionId, refreshToken });
+
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    sameSite: 'None',
+    secure: process.env.NODE_ENV === 'production',
+  });
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    sameSite: 'None',
+    secure: process.env.NODE_ENV === 'production',
+  });
+
+  res.json({
+    status: 200,
+    message: 'Token successfully refreshed',
+    data: {
+      accessToken: session.accessToken,
+      refreshToken: session.refreshToken,
+    },
+  });
 };
