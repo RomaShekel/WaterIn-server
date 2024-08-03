@@ -24,4 +24,10 @@ components:
         createdAt:
           description: 'Time in Unix format when the note was created'
           type: integer
+          format: int64
           expample: 1699209600000
+        updateddAt:
+          description: 'Time in Unix format when the note was updated'
+          type: integer
+          format: int64
+          expample: 1699889600000
