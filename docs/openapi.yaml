@@ -5,8 +5,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description:
-    App for management client contacts
+  description: App for management client contacts
 tags:
   - name: Users
     description: Operations about users.
@@ -17,8 +16,17 @@ tags:
 servers:
   - url: http://localhost:3000
   # - url: server path not config yet
-# paths:
-  # /water:
+paths:
+  /water/{id}:
+    # get:
+    patch:
+      $ref: ../swagger/paths/water/{id}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/water/{id}/delete.yaml
+  /water:
+    # get:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
   # /users:
   # /auth
 components:

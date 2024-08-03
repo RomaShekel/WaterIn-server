@@ -1,0 +1,65 @@
+tags:
+  - Water Note
+summary: Create a water note
+operationId: createWaterNote
+description: 'Create a water note with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - volume
+          - drinkTime
+        properties:
+          volume:
+            description: 'Volume of water consumed in milliliters'
+            type: number
+            example: 500
+          drinkTime:
+            description: 'Time when the water was consumed'
+            type: string
+            format: time
+            example: '15:30'
+responses:
+  '201':
+    description: Successfully created a water note
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Seccessufuly add water note!
+            data:
+              type: object
+              properties:
+                volume:
+                  type: number
+                  example: 500
+                drinkTime:
+                  type: string
+                  format: time
+                  example: '15:30'
+                createdAt:
+                  type: string
+                  format: date-time
+                  example: '2024-08-03T15:00:00Z'
+                updatedAt:
+                  type: string
+                  format: date-time
+                  example: '2024-08-03T15:00:00Z'
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
