@@ -1,0 +1,33 @@
+components:
+  schemas:
+    WaterNote:
+      type: object
+      required:
+        - userId
+        - volume
+        - drinkTime
+        - createdAt
+      properties:
+        userId:
+          description: 'ID of the user who recorded the water intake'
+          type: string
+          example: '64a8c29f8c1d8d1a4e8b4567'
+        volume:
+          description: 'Volume of water consumed in milliliters'
+          type: number
+          example: 500
+        drinkTime:
+          description: 'Time when the water was consumed'
+          type: string
+          format: time
+          example: '15:30'
+        createdAt:
+          description: 'Time in Unix format when the note was created'
+          type: integer
+          format: int64
+          expample: 1699209600000
+        updateddAt:
+          description: 'Time in Unix format when the note was updated'
+          type: integer
+          format: int64
+          expample: 1699889600000
