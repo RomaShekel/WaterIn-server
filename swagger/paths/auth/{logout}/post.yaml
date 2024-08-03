@@ -1,0 +1,19 @@
+tags:
+  - Auth
+summary: User logout
+operationId: logoutUser
+description: 'User login'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+responses:
+  '204':
+    description: No Content
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
