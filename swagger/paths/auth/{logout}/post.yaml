@@ -2,12 +2,19 @@ tags:
   - Auth
 summary: User logout
 operationId: logoutUser
-description: 'User login'
+description: 'Logs out the user by invalidating the session'
 security:
   - bearerAuth: []
+parameters:
+  - in: cookie
+    name: sessionId
+    required: true
+    schema:
+      type: string
+    description: Session ID of the user.
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
 responses:
