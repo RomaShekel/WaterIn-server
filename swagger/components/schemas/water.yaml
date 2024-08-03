@@ -6,6 +6,7 @@ components:
         - userId
         - volume
         - drinkTime
+        - createdAt
       properties:
         userId:
           description: 'ID of the user who recorded the water intake'
@@ -20,3 +21,7 @@ components:
           type: string
           format: time
           example: '15:30'
+        createdAt:
+          description: 'Time in Unix format when the note was created'
+          type: integer
+          expample: 1699209600000
