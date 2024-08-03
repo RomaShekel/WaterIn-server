@@ -11,6 +11,7 @@ export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
 
   const session = await loginUser(req.body);
+
   setupSession(res, session);
 
   const data = {
@@ -82,19 +83,7 @@ export const refreshTokenController = async (req, res) => {
     throw createHttpError(400);
   }
 
-  // const session = await refreshUserSession({
-  //   sessionId: req.cookies.sessionId,
-  //   refreshToken: req.cookies.refreshToken,
-  // });
-
   const session = await refreshUserSession({ sessionId, refreshToken });
-
-  // setupSession(res, session);
-  // if (!refreshToken) {
-  //   throw createHttpError(400, 'Refresh token is required');
-  // }
-
-  // const tokens = await refreshUserSession(refreshToken);
 
   res.cookie('sessionId', session._id, {
     httpOnly: true,
