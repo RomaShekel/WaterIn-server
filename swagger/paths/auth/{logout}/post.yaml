@@ -13,6 +13,7 @@ parameters:
       type: string
     description: Session ID of the user.
 requestBody:
+  required: true
   content:
     application/json:
       schema:

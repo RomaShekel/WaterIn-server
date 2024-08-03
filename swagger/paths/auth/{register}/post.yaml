@@ -6,6 +6,7 @@ description: 'User rigistration'
 security:
   - {}
 requestBody:
+  required: true
   content:
     application/json:
       schema:
