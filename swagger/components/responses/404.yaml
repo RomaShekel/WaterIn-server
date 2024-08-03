@@ -21,4 +21,4 @@ content:
           properties:
             message:
               type: string
-              example: 'Water note with id 66ad2e950ad416410d20ebd9 not found'
+              example: 'Entity not found'
