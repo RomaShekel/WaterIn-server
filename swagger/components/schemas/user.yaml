@@ -1,0 +1,38 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      name:
+        description: 'User name'
+        type: string
+        example: 'John Doe'
+      email:
+        description: 'User email'
+        type: string
+        example: 'example@mail.com'
+      photo:
+        description: "Link to user's photo"
+        type: string
+        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+      sportHours:
+        description: "User's sport hours"
+        type: number
+        example: 2
+      weight:
+        description: "User's weight"
+        type: number
+        example: 82
+      waterRate:
+        description: 'Amount of water'
+        type: number
+        example: 1.5
+      gender:
+        description: "User's gender"
+        type: string
+        enum: ['woman', 'man']
+accessToken:
+  type: string
+  example: N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6
+required:
+  - email
