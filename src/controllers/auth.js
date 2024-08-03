@@ -77,7 +77,6 @@ export const logoutUserController = async (req, res) => {
 
 export const refreshTokenController = async (req, res) => {
   const { refreshToken, sessionId } = req.cookies;
-  console.log('Cookies:', req.cookies);
 
   if (!refreshToken || !sessionId) {
     throw createHttpError(400);
