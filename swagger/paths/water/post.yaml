@@ -52,13 +52,13 @@ responses:
                   format: time
                   example: '15:30'
                 createdAt:
-                  type: string
-                  format: date-time
-                  example: '2024-08-03T15:00:00Z'
+                  type: integer
+                  format: int64
+                  example: 1699209600000
                 updatedAt:
-                  type: string
-                  format: date-time
-                  example: '2024-08-03T15:00:00Z'
+                  type: integer
+                  format: int64
+                  example: 1699889600000
   '400':
     $ref: '../../components/responses/400.yaml'
   '401':
