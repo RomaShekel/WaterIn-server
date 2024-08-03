@@ -31,8 +31,8 @@ properties:
         description: "User's gender"
         type: string
         enum: ['woman', 'man']
-accessToken:
-  type: string
-  example: N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6
+  accessToken:
+    type: string
+    example: N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6
 required:
   - email

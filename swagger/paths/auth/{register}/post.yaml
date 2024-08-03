@@ -1,24 +1,19 @@
 tags:
   - Auth
 summary: User rigistration
-operationId: singupUser
+operationId: registerUser
 description: 'User rigistration'
 security:
-  - bearerAuth: []
+  - {}
 requestBody:
   content:
     multipart/form-data:
       schema:
         type: object
         required:
-          - name
           - email
           - password
         properties:
-          name:
-            description: 'User name'
-            type: string
-            example: 'John Doe'
           email:
             description: 'User email'
             type: string
@@ -26,7 +21,7 @@ requestBody:
           password:
             description: 'Account password'
             type: string
-            example: '38984_fY'
+            example: 'password321'
 responses:
   '201':
     description: Registers a user
