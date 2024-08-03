@@ -6,6 +6,7 @@ import {
   loginUserController,
   logoutUserController,
   registerUserController,
+  refreshTokenController,
 } from '../controllers/auth.js';
 import { loginUserSchema, registerUserSchema } from '../validations/auth.js';
 
@@ -23,16 +24,9 @@ router.post(
   ctrlWrapper(loginUserController),
 );
 
+router.post('/refresh', ctrlWrapper(refreshTokenController));
 
-// router.post(
-//     '/refresh',
-//     ctrlWrapper());
-
-
-router.post(
-  '/logout',
-  ctrlWrapper(logoutUserController));
-
+router.post('/logout', ctrlWrapper(logoutUserController));
 
 // router.post(
 //     '/send-reset-email',

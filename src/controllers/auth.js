@@ -1,5 +1,10 @@
 import createHttpError from 'http-errors';
-import { loginUser, logoutUser, registerUser } from '../services/auth.js';
+import {
+  loginUser,
+  logoutUser,
+  registerUser,
+  refreshUserSession,
+} from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
 
 export const registerUserController = async (req, res) => {
@@ -67,4 +72,47 @@ export const logoutUserController = async (req, res) => {
   });
 
   res.status(204).send();
+};
+
+export const refreshTokenController = async (req, res) => {
+  const { refreshToken, sessionId } = req.cookies;
+  console.log('Cookies:', req.cookies);
+
+  if (!refreshToken || !sessionId) {
+    throw createHttpError(400);
+  }
+
+  // const session = await refreshUserSession({
+  //   sessionId: req.cookies.sessionId,
+  //   refreshToken: req.cookies.refreshToken,
+  // });
+
+  const session = await refreshUserSession({ sessionId, refreshToken });
+
+  // setupSession(res, session);
+  // if (!refreshToken) {
+  //   throw createHttpError(400, 'Refresh token is required');
+  // }
+
+  // const tokens = await refreshUserSession(refreshToken);
+
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    sameSite: 'None',
+    secure: process.env.NODE_ENV === 'production',
+  });
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    sameSite: 'None',
+    secure: process.env.NODE_ENV === 'production',
+  });
+
+  res.json({
+    status: 200,
+    message: 'Token successfully refreshed',
+    data: {
+      accessToken: session.accessToken,
+      refreshToken: session.refreshToken,
+    },
+  });
 };
