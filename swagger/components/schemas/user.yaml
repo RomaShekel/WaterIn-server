@@ -1,39 +1,39 @@
 type: object
-required:
-  - _id
-  - name
-  - password
-  - email
 properties:
-  _id:
-    description: "User's id"
+  data:
+    type: object
+    properties:
+      name:
+        description: 'User name'
+        type: string
+        example: 'John Doe'
+      email:
+        description: 'User email'
+        type: string
+        example: 'example@mail.com'
+      photo:
+        description: "Link to user's photo"
+        type: string
+        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+      sportHours:
+        description: "User's sport hours"
+        type: number
+        example: 2
+      weight:
+        description: "User's weight"
+        type: number
+        example: 82
+      waterRate:
+        description: 'Amount of water'
+        type: number
+        example: 1500
+      gender:
+        description: "User's gender"
+        type: string
+        enum: ['woman', 'man']
+  accessToken:
     type: string
-    example: '65e4decdd286b30065d54af9'
-  name:
-    description: "User's name"
-    type: string
-    example: 'John Doe'
-  email:
-    description: "User's email"
-    type: string
-    example: 'user@gmail.com'
-  password:
-    description: "User's password"
-    type: string
-    example: '1234567'
-  gender:
-    description: "User's gender"
-    type: string
-    enum: ['woman', 'man']
-  weight:
-    description: "User's weight"
-    type: number
-    example: 70
-  waterRate:
-    description: "User's daily water intake rate in liters"
-    type: number
-    example: 1.5
-  photo:
-    description: "Link to user's photo"
-    type: string
-    example: <https://res.cloudinary.com/uqwgdu/image/upload/image.png>
+    example: N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6
+required:
+  - email
+

@@ -3,11 +3,13 @@ import { Router } from 'express';
 import { isValidWaterId } from '../utils/isValidId.js';
 import { validateBody } from '../utils/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { waterAddShema, waterUpdateShema } from '../validations/water.js';
+import { waterAddShema, waterGetSchema, waterUpdateShema } from '../validations/water.js';
 import {
   addWaterController,
   deleteWaterController,
   updateWaterController,
+  getWaterPerMonthController,
+  getWaterPerDayController
 } from '../controllers/water.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
@@ -15,16 +17,16 @@ const router = Router();
 
 router.use(authenticate);
 
-// router.get(
-//     '/',
-//     ctrlWrapper("get all water controller"));
+router.get(
+  '/month',
+  validateBody(waterGetSchema),
+  ctrlWrapper(getWaterPerMonthController)
+);
 
-// router.get(
-//     '/:waterId',
-//     isValidId,
-//     ctrlWrapper("get water by id controller"));
-
-// прибрав upload.single('photo') оскількі ці данні у юзера йдуть в нас їх нема
+router.get(
+  '/day',
+  validateBody(waterGetSchema),
+  ctrlWrapper(getWaterPerDayController));
 
 router.post('/', validateBody(waterAddShema), ctrlWrapper(addWaterController));
 

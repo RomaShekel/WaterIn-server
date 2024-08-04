@@ -1,0 +1,27 @@
+tags:
+  - Auth
+summary: User logout
+operationId: logoutUser
+description: 'Logs out the user by invalidating the session'
+security:
+  - bearerAuth: []
+parameters:
+  - in: cookie
+    name: sessionId
+    required: true
+    schema:
+      type: string
+    description: Session ID of the user.
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+responses:
+  '204':
+    description: No Content
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
