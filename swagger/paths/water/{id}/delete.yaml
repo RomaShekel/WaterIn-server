@@ -1,0 +1,21 @@
+tags:
+  - Water note
+summary: Delete Water note
+operationId: WaterNote
+description: 'Delete water note by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+responses:
+  '204':
+    description: 'Successfully delete a water note!'
+  '401':
+    $ref: ..\..\..\components\responses\401.yaml
+  '404':
+    $ref: ..\..\..\components\responses\404.yaml

@@ -1,0 +1,70 @@
+tags:
+  - Water Note
+summary: Update water note by id
+operationId: updateWaterNoteById
+description: 'Update a water note by its ID'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          volume:
+            description: 'Volume of water consumed in milliliters'
+            type: number
+            example: 500
+          drinkTime:
+            description: 'Updated time when the water was consumed'
+            type: string
+            format: time
+            example: '15:30'
+        required: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '64a8c29f8c1d8d1a4e8b4567'
+responses:
+  '200':
+    description: 'Successfully updated the water note'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated the water note with id 64a8c29f8c1d8d1a4e8b4567
+            data:
+              type: object
+              properties:
+                _id:
+                  description: 'Unique identifier for the water note'
+                  type: string
+                  example: '64a8c29f8c1d8d1a4e8b4567'
+                volume:
+                  description: 'Updated volume of water consumed in milliliters'
+                  type: number
+                  example: 600
+                drinkTime:
+                  description: 'Updated time when the water was consumed'
+                  type: string
+                  format: time
+                  example: '15:30'
+  '400':
+    $ref: ..\..\..\components\responses\400.yaml
+  '401':
+    $ref: ..\..\..\components\responses\401.yaml
+  '404':
+    $ref: ..\..\..\components\responses\404.yaml

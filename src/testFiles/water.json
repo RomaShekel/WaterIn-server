@@ -1,53 +1,72 @@
 [
-    {
-      "userId": "user1",
-      "volume": 250,
-      "drinkTime": "2024-07-03T08:30:00Z"
-    },
-    {
-      "userId": "user2",
-      "volume": 300,
-      "drinkTime": "2024-07-03T09:00:00Z"
-    },
-    {
-      "userId": "user3",
-      "volume": 200,
-      "drinkTime": "2024-07-03T10:00:00Z"
-    },
-    {
-      "userId": "user4",
-      "volume": 350,
-      "drinkTime": "2024-07-03T11:15:00Z"
-    },
-    {
-      "userId": "user5",
-      "volume": 400,
-      "drinkTime": "2024-07-03T12:30:00Z"
-    },
-    {
-      "userId": "user6",
-      "volume": 150,
-      "drinkTime": "2024-07-03T13:45:00Z"
-    },
-    {
-      "userId": "user7",
-      "volume": 500,
-      "drinkTime": "2024-07-03T14:00:00Z"
-    },
-    {
-      "userId": "user8",
-      "volume": 250,
-      "drinkTime": "2024-07-03T15:30:00Z"
-    },
-    {
-      "userId": "user9",
-      "volume": 300,
-      "drinkTime": "2024-07-03T16:45:00Z"
-    },
-    {
-      "userId": "user10",
-      "volume": 350,
-      "drinkTime": "2024-07-03T17:00:00Z"
-    }
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 242,
+    "drinkTime": "21:02",
+    "createdAt": 1722470400000,
+    "updatedAt": 1722470400000
+  },
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 413,
+    "drinkTime": "15:49",
+    "createdAt": 1722556800000,
+    "updatedAt": 1722556800000
+  },
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 475,
+    "drinkTime": "09:04",
+    "createdAt": 1722643200000,
+    "updatedAt": 1722643200000
+  },
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 380,
+    "drinkTime": "00:32",
+    "createdAt": 1722729600000,
+    "updatedAt": 1722729600000
+  },
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 488,
+    "drinkTime": "07:26",
+    "createdAt": 1722816000000,
+    "updatedAt": 1722816000000
+  },
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 368,
+    "drinkTime": "05:15",
+    "createdAt": 1722902400000,
+    "updatedAt": 1722902400000
+  },
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 232,
+    "drinkTime": "01:41",
+    "createdAt": 1722988800000,
+    "updatedAt": 1722988800000
+  },
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 455,
+    "drinkTime": "20:31",
+    "createdAt": 1723075200000,
+    "updatedAt": 1723075200000
+  },
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 269,
+    "drinkTime": "02:01",
+    "createdAt": 1723161600000,
+    "updatedAt": 1723161600000
+  },
+  {
+    "userId": "66ad13a1d0642828361939ec",
+    "volume": 492,
+    "drinkTime": "22:16",
+    "createdAt": 1723248000000,
+    "updatedAt": 1723248000000
+  }
 ]
-  
