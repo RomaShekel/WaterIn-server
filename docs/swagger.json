@@ -331,7 +331,7 @@
               "waterRate": {
                 "description": "Amount of water",
                 "type": "number",
-                "example": 1.5
+                "example": 1500
               },
               "gender": {
                 "description": "User's gender",
