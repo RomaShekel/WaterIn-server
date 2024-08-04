@@ -5,17 +5,27 @@ operationId: refreshToken
 description: Obtain a new authentication token using a refresh token
 security:
   - bearerAuth: []
+parameters:
+  - in: cookie
+    name: sessionId
+    required: true
+    schema:
+      type: string
+    description: Session ID of the user.
+    example: 'j%3A%2266afd9c8c4e0fac0f172245c%22'
+  - in: cookie
+    name: refreshToken
+    required: true
+    schema:
+      type: string
+    description: Refresh Token of user session.
+    example: 'dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4='
 requestBody:
   required: true
   content:
     application/json:
       schema:
         type: object
-        properties:
-          refreshToken:
-            type: string
-            description: The refresh token used to obtain a new authentication token
-            example: 'dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4='
 responses:
   '200':
     description: Token refreshed successfully
