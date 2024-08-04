@@ -1,0 +1,31 @@
+description: Successfully found water notes
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: Successful find water notes by date
+        data:
+          type: object
+          required:
+            - date
+            - waterNotes
+          properties:
+            date:
+              type: string
+              example: '2024-08-04'
+              description: "Date of month where water notes were searched"
+            waterNotes:
+              type: array
+              items:
+                type: object
+                $ref: ../schemas/water.yaml

@@ -1,12 +1,9 @@
-components:
-  schemas:
-    WaterNote:
+
       type: object
       required:
         - userId
         - volume
         - drinkTime
-        - createdAt
       properties:
         userId:
           description: 'ID of the user who recorded the water intake'

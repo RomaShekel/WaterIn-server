@@ -11,14 +11,12 @@ import { format } from 'date-fns';
 export const addWaterController = async (req, res) => {
   const userId = req.user._id;
 
-  console.log('user:', userId);
-
   const data = await addWaterNote({ ...req.body, userId });
 
   res.status(201).json({
     status: 201,
     data,
-    message: 'Seccessufuly add water note',
+    message: 'Successfully add water note',
   });
 };
 
@@ -47,7 +45,7 @@ export const updateWaterController = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     data,
-    message: `Successfuly update water note by id=${data._id}`,
+    message: `Successfully update water note by id=${data._id}`,
   });
 };
 

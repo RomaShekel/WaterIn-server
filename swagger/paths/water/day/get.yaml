@@ -1,0 +1,66 @@
+tags:
+  - Water
+summary: Get water notes for day
+operationId: getWaterPerDay
+description: Get water notes per day
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - date
+        properties:
+          date: 
+            description: 'Date of day where water notes will be searched'
+            type: number
+            example: 1722772947000
+responses:
+  '200':
+    description: Successfully find notes on day
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully find water notes!
+            data:
+              type: object
+              properties:
+                notes:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - userId
+                      - volume
+                      - drinkTime
+                    properties:
+                      userId:
+                        type: string
+                        example: '1234567890abcdef'
+                      volume:
+                        type: number
+                        example: 500
+                      drinkTime:
+                        type: string
+                        example: '12:45'
+                      createdAt:
+                        type: number
+                        example: 1657123456789
+                      updatedAt:
+                        type: number
+                        example: 1657123456789 
+  '404':
+    $ref: '../../../components/responses/404.yaml'
