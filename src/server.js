@@ -15,8 +15,8 @@ export const setupServer = () => {
   const app = express();
 
   const corsOptions = {
-    origin: ['http://localhost:5173'], // Вказуємо всі дозволені URL фронтенду
-    credentials: true, // Для передачі cookies та авторизаційних заголовків
+    origin: ['http://localhost:5173', 'https://waterin-server.onrender.com'],
+    credentials: true,
   };
 
   app.use(cors(corsOptions));
