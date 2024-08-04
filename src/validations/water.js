@@ -25,3 +25,17 @@ export const waterUpdateShema = Joi.object({
     'number.base': 'volume must be a number',
   }),
 });
+
+const unixTimeValidator = (value, helpers) => {
+  if (typeof value !== 'number' || value < 0) {
+    return helpers.error('any.invalid');
+  }
+  return value;
+};
+
+export const waterGetSchema = Joi.object({
+  date: Joi.number()
+  .custom(unixTimeValidator, 'Unix time validation')
+  .required()
+
+})
