@@ -21,7 +21,6 @@ export const registerUser = async (payload) => {
 };
 
 export const loginUser = async (payload) => {
-  console.log(payload.email);
   const user = await UsersCollection.findOne({ email: payload.email });
 
   if (!user) {
