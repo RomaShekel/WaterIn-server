@@ -33,7 +33,6 @@ export const getWaterPerDay = async (userId, day) => {
   const endDay = endOfDay(date)
   const dayStartInUnix = getUnixTime(resetDay) * 1000;
   const dayEndInUnix = getUnixTime(endDay) * 1000;
-  console.log(dayEndInUnix, dayStartInUnix)
 
   const dayWater = await WaterNotesCollection
   .find({userId: userId})
@@ -53,9 +52,6 @@ export const getWaterPerMonth = async (userId, userNorm = 1500, time) => {
   const endMonth = endOfMonth(date)
   const monthStartInUnix = getUnixTime(resetMonth) * 1000;
   const monthEndInUnix = getUnixTime(endMonth) * 1000;
-  // const usersRate = user.waterRate;
-
- 
 
   const monthWater = await WaterNotesCollection.aggregate([
     {
@@ -109,6 +105,5 @@ export const getWaterPerMonth = async (userId, userNorm = 1500, time) => {
     return entry ? entry : { ...date };
   });
 
-  console.log(result);
   return result;
 }

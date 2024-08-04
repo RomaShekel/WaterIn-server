@@ -88,7 +88,6 @@ export const getWaterPerDayController = async (req, res, next) => {
 
 export const getWaterPerMonthController = async (req, res, next) => {
   const userId = req.user._id;
-  console.log(userId)
   const userNorm = req.user.waterRate;
   const { date } = req.body;
   const normalFormat = format(date, 'yyyy-MM-dd')
