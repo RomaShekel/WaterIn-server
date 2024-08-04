@@ -14,7 +14,7 @@ tags:
   - name: Auth
     description: Auth operations.
 servers:
-  - url: http://localhost:3000
+  - url: https://waterin-server.onrender.com
   # - url: server path not config yet
 paths:
   /users/register:
