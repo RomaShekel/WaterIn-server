@@ -26,6 +26,14 @@ paths:
   /users/logout:
     post:
       $ref: ../swagger/paths/auth/{logout}/post.yaml
+  /users/{id}:
+    get:
+      $ref: ../swagger/paths/users/get.yaml
+    patch:
+      $ref: ../swagger/paths/users/patch.yaml
+  /users/refresh:
+    post:
+      $ref: '../swagger/paths/auth/refresh-token.yaml'
   /water/{id}:
     patch:
       $ref: ../swagger/paths/water/{id}/patch.yaml

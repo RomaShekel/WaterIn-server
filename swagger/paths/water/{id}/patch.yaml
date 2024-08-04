@@ -63,8 +63,8 @@ responses:
                   format: time
                   example: '15:30'
   '400':
-    $ref: ..\..\..\components\responses\400.yaml
+    $ref: ../../../components/responses/400.yaml
   '401':
-    $ref: ..\..\..\components\responses\401.yaml
+    $ref: ../../../components/responses/401.yaml
   '404':
-    $ref: ..\..\..\components\responses\404.yaml
+    $ref: ../../../components/responses/404.yaml
