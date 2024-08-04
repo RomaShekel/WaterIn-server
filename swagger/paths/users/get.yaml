@@ -1,0 +1,43 @@
+tags:
+  - Users
+
+summary: Get current user by id
+operationId: getUser
+description: Retrieve the profile information of the currently logged-in user
+
+security:
+  - bearerAuth: []
+
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+
+responses:
+  '200':
+    description: Get user by id
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found user with id 65ca67e7ae7f10c88b598384!
+            data:
+              type: object
+              $ref: ../../components/schemas/user.yaml
+  '404':
+    $ref: '../../components/responses/404.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
