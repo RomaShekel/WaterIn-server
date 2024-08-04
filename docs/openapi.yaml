@@ -17,8 +17,16 @@ servers:
   - url: http://localhost:3000
   # - url: server path not config yet
 paths:
+  /users/register:
+    post:
+      $ref: ../swagger/paths/auth/{register}/post.yaml
+  /users/login:
+    post:
+      $ref: ../swagger/paths/auth/{login}/post.yaml
+  /users/logout:
+    post:
+      $ref: ../swagger/paths/auth/{logout}/post.yaml
   /water/{id}:
-    # get:
     patch:
       $ref: ../swagger/paths/water/{id}/patch.yaml
     delete:
@@ -27,7 +35,6 @@ paths:
     # get:
     post:
       $ref: ../swagger/paths/water/post.yaml
-  # /users:
 components:
   securitySchemes:
     bearerAuth:

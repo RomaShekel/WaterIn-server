@@ -1,8 +1,13 @@
+
 description: Bad Requestr
 content:
   application/json:
     schema:
       type: object
+      required:
+        - status
+        - message
+        - data
       properties:
         status:
           type: integer
@@ -17,4 +22,4 @@ content:
           properties:
             message:
               type: string
-              example: 'Format time must be like this 07:30 or 12:30'
+              example: 'Missing required field'
