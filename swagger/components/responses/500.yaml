@@ -1,5 +1,4 @@
-
-description: Not Found Error
+description: Internal Server Error
 content:
   application/json:
     schema:
@@ -11,10 +10,10 @@ content:
       properties:
         status:
           type: integer
-          example: 404
+          example: 500
         message:
           type: string
-          example: NotFoundError
+          example: Internal Server Error
         data:
           type: object
           required:
@@ -22,4 +21,4 @@ content:
           properties:
             message:
               type: string
-              example: 'Entity not found'
+              example: 'Something went wrong'

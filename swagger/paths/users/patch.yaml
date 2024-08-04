@@ -1,0 +1,72 @@
+tags:
+  - Users
+summary: Update user by id
+operationId: upsertsUser
+description: 'You can update a user by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            description: "User's name"
+            type: string
+            example: 'John Doe'
+          email:
+            description: "User's email"
+            type: string
+            example: 'googl@gmail.com'
+          sportHours:
+            description: 'Hours of sport activities per week'
+            type: number
+            example: 5
+          gender:
+            description: "User's gender"
+            type: string
+            enum: ['woman', 'man']
+          weight:
+            description: "User's weight in kg"
+            type: number
+            example: 70
+          waterRate:
+            description: "User's daily water intake rate in liters"
+            type: number
+            example: 2.5
+          photo:
+            description: "User's photo"
+            type: string
+            format: binary
+responses:
+  '200':
+    description: 'Updates a user'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully updated a user!'
+            data:
+              type: object
+  '404':
+    $ref: ../../components/responses/404.yaml
+  '401':
+    $ref: '../../components/responses/401.yaml'

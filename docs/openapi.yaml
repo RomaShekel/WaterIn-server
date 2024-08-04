@@ -17,16 +17,6 @@ servers:
   - url: http://localhost:3000
   # - url: server path not config yet
 paths:
-  /water/{id}:
-    # get:
-    patch:
-      $ref: ../swagger/paths/water/{id}/patch.yaml
-    delete:
-      $ref: ../swagger/paths/water/{id}/delete.yaml
-  /water:
-    # get:
-    post:
-      $ref: ../swagger/paths/water/post.yaml
   /users/register:
     post:
       $ref: ../swagger/paths/auth/{register}/post.yaml
@@ -36,6 +26,23 @@ paths:
   /users/logout:
     post:
       $ref: ../swagger/paths/auth/{logout}/post.yaml
+  /users/{id}:
+    get:
+      $ref: ../swagger/paths/users/get.yaml
+    patch:
+      $ref: ../swagger/paths/users/patch.yaml
+  /users/refresh:
+    post:
+      $ref: '../swagger/paths/auth/refresh-token.yaml'
+  /water/{id}:
+    patch:
+      $ref: ../swagger/paths/water/{id}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/water/{id}/delete.yaml
+  /water:
+    # get:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
 components:
   securitySchemes:
     bearerAuth:

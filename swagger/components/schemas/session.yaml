@@ -1,0 +1,13 @@
+properties:
+  user:
+    type: object
+    properties:
+      userId:
+        description: 'User id'
+        type: string
+        example: '66ae5e4b60080f8db63bb8ed'
+  accessToken:
+    type: string
+    example: N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6
+required:
+  - email
