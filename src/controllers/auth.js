@@ -82,25 +82,18 @@ export const refreshTokenController = async (req, res) => {
     throw createHttpError(400);
   }
 
-  const session = await refreshUserSession({ sessionId, refreshToken });
+  const session = await refreshUserSession({
+    sessionId: req.cookies.sessionId,
+    refreshToken: req.cookies.refreshToken,
+  });
 
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    sameSite: 'None',
-    secure: process.env.NODE_ENV === 'production',
-  });
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    sameSite: 'None',
-    secure: process.env.NODE_ENV === 'production',
-  });
+  setupSession(res, session);
 
   res.json({
     status: 200,
     message: 'Token successfully refreshed',
     data: {
       accessToken: session.accessToken,
-      refreshToken: session.refreshToken,
     },
   });
 };

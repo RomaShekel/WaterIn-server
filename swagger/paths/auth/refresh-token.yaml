@@ -29,6 +29,12 @@ requestBody:
 responses:
   '200':
     description: Token refreshed successfully
+    headers:
+      Set-Cookie:
+        description: Contains session id and refresh tokens.
+        schema:
+          type: string
+          example: 'sessionId=abc123; refreshToken=abc123; Path=/; HttpOnly; Secure; SameSite=None'
     content:
       application/json:
         schema:
