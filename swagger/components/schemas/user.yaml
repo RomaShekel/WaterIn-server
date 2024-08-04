@@ -7,6 +7,7 @@ properties:
         description: 'User name'
         type: string
         example: 'John Doe'
+        default: User
       email:
         description: 'User email'
         type: string
@@ -19,18 +20,22 @@ properties:
         description: "User's sport hours"
         type: number
         example: 2
+        default: 0
       weight:
         description: "User's weight"
         type: number
         example: 82
+        default: 0
       waterRate:
         description: 'Amount of water'
         type: number
         example: 1500
+        default: 1500
       gender:
         description: "User's gender"
         type: string
         enum: ['woman', 'man']
+        default: woman
   accessToken:
     type: string
     example: N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6

@@ -1,5 +1,5 @@
 tags:
-  - Water Note
+  - Water
 summary: Create a water note
 operationId: createWaterNote
 description: 'Create a water note with payload'
@@ -40,7 +40,7 @@ responses:
               example: 201
             message:
               type: string
-              example: Seccessufuly add water note!
+              example: Successfully add water note!
             data:
               type: object
               properties:

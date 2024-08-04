@@ -1,5 +1,5 @@
 tags:
-  - Water Note
+  - Water
 summary: Update water note by id
 operationId: updateWaterNoteById
 description: 'Update a water note by its ID'

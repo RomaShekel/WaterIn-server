@@ -1,1 +1,1243 @@
-{}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "WaterIn server",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "App for monitoring the amount of water consumed"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Operations about users."
+    },
+    {
+      "name": "Water",
+      "description": "Operations about water."
+    },
+    {
+      "name": "Auth",
+      "description": "Auth operations."
+    }
+  ],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User rigistration",
+        "operationId": "registerUser",
+        "description": "User rigistration",
+        "security": [
+          {}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User email",
+                    "type": "string",
+                    "example": "example@mail.com"
+                  },
+                  "password": {
+                    "description": "Account password",
+                    "type": "string",
+                    "example": "password321"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Registers a user",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Contains session id and refresh tokens.",
+                "schema": {
+                  "type": "string",
+                  "example": "sessionId=abc123; Path=/; HttpOnly; Secure; SameSite=None"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "409": {
+            "description": "Error while registering user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "ConflictError"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "message"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Email in use"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User login",
+        "operationId": "loginUser",
+        "description": "User login",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User email",
+                    "type": "string",
+                    "example": "example@mail.com"
+                  },
+                  "password": {
+                    "description": "Account password",
+                    "type": "string",
+                    "example": "password321"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registers a user",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Contains session id and refresh tokens.",
+                "schema": {
+                  "type": "string",
+                  "example": "sessionId=abc123; Path=/; HttpOnly; Secure; SameSite=None"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in an user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/session"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User logout",
+        "operationId": "logoutUser",
+        "description": "Logs out the user by invalidating the session",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session ID of the user."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get current user by id",
+        "operationId": "getUser",
+        "description": "Retrieve the profile information of the currently logged-in user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get user by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found user with id 65ca67e7ae7f10c88b598384!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user by id",
+        "operationId": "upsertsUser",
+        "description": "You can update a user by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "User's name",
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "googl@gmail.com"
+                  },
+                  "sportHours": {
+                    "description": "Hours of sport activities per week",
+                    "type": "number",
+                    "example": 5
+                  },
+                  "gender": {
+                    "description": "User's gender",
+                    "type": "string",
+                    "enum": [
+                      "woman",
+                      "man"
+                    ]
+                  },
+                  "weight": {
+                    "description": "User's weight in kg",
+                    "type": "number",
+                    "example": 70
+                  },
+                  "waterRate": {
+                    "description": "User's daily water intake rate in liters",
+                    "type": "number",
+                    "example": 2.5
+                  },
+                  "photo": {
+                    "description": "User's photo",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updates a user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated a user!"
+                    },
+                    "data": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/users/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Refresh the authentication token",
+        "operationId": "refreshToken",
+        "description": "Obtain a new authentication token using a refresh token",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "type": "string",
+                    "description": "The refresh token used to obtain a new authentication token",
+                    "example": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token refreshed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "yKJRYGuruk+EUYeXJyU/+SUMfICpe0NT/say3guZ"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water/{id}": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update water note by id",
+        "operationId": "updateWaterNoteById",
+        "description": "Update a water note by its ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "volume": {
+                    "description": "Volume of water consumed in milliliters",
+                    "type": "number",
+                    "example": 500
+                  },
+                  "drinkTime": {
+                    "description": "Updated time when the water was consumed",
+                    "type": "string",
+                    "format": "time",
+                    "example": "15:30"
+                  }
+                },
+                "required": []
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "64a8c29f8c1d8d1a4e8b4567"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated the water note",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated the water note with id 64a8c29f8c1d8d1a4e8b4567"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "description": "Unique identifier for the water note",
+                          "type": "string",
+                          "example": "64a8c29f8c1d8d1a4e8b4567"
+                        },
+                        "volume": {
+                          "description": "Updated volume of water consumed in milliliters",
+                          "type": "number",
+                          "example": 600
+                        },
+                        "drinkTime": {
+                          "description": "Updated time when the water was consumed",
+                          "type": "string",
+                          "format": "time",
+                          "example": "15:30"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete Water note",
+        "operationId": "WaterNote",
+        "description": "Delete water note by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully delete a water note!"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Create a water note",
+        "operationId": "createWaterNote",
+        "description": "Create a water note with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "volume",
+                  "drinkTime"
+                ],
+                "properties": {
+                  "volume": {
+                    "description": "Volume of water consumed in milliliters",
+                    "type": "number",
+                    "example": 500
+                  },
+                  "drinkTime": {
+                    "description": "Time when the water was consumed",
+                    "type": "string",
+                    "format": "time",
+                    "example": "15:30"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a water note",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully add water note!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "volume": {
+                          "type": "number",
+                          "example": 500
+                        },
+                        "drinkTime": {
+                          "type": "string",
+                          "format": "time",
+                          "example": "15:30"
+                        },
+                        "createdAt": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1699209600000
+                        },
+                        "updatedAt": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1699889600000
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/water/day": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get water notes for day",
+        "operationId": "getWaterPerDay",
+        "description": "Get water notes per day",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "date"
+                ],
+                "properties": {
+                  "date": {
+                    "description": "Date of day where water notes will be searched",
+                    "type": "number",
+                    "example": 1722772947000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully find notes on day",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully find water notes!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "notes": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "userId",
+                              "volume",
+                              "drinkTime"
+                            ],
+                            "properties": {
+                              "userId": {
+                                "type": "string",
+                                "example": "1234567890abcdef"
+                              },
+                              "volume": {
+                                "type": "number",
+                                "example": 500
+                              },
+                              "drinkTime": {
+                                "type": "string",
+                                "example": "12:45"
+                              },
+                              "createdAt": {
+                                "type": "number",
+                                "example": 1657123456789
+                              },
+                              "updatedAt": {
+                                "type": "number",
+                                "example": 1657123456789
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get water notes for month",
+        "operationId": "getWaterPerMonth",
+        "description": "Get water notes per month divided on days",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "date"
+                ],
+                "properties": {
+                  "date": {
+                    "description": "Date of month where water notes will be searched",
+                    "type": "integer",
+                    "example": 1722772947000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "User name",
+                "type": "string",
+                "example": "John Doe",
+                "default": "User"
+              },
+              "email": {
+                "description": "User email",
+                "type": "string",
+                "example": "example@mail.com"
+              },
+              "photo": {
+                "description": "Link to user's photo",
+                "type": "string",
+                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+              },
+              "sportHours": {
+                "description": "User's sport hours",
+                "type": "number",
+                "example": 2,
+                "default": 0
+              },
+              "weight": {
+                "description": "User's weight",
+                "type": "number",
+                "example": 82,
+                "default": 0
+              },
+              "waterRate": {
+                "description": "Amount of water",
+                "type": "number",
+                "example": 1500,
+                "default": 1500
+              },
+              "gender": {
+                "description": "User's gender",
+                "type": "string",
+                "enum": [
+                  "woman",
+                  "man"
+                ],
+                "default": "woman"
+              }
+            }
+          },
+          "accessToken": {
+            "type": "string",
+            "example": "N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "session": {
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "description": "User id",
+                "type": "string",
+                "example": "66ae5e4b60080f8db63bb8ed"
+              }
+            }
+          },
+          "accessToken": {
+            "type": "string",
+            "example": "N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "water": {
+        "type": "object",
+        "required": [
+          "userId",
+          "volume",
+          "drinkTime"
+        ],
+        "properties": {
+          "userId": {
+            "description": "ID of the user who recorded the water intake",
+            "type": "string",
+            "example": "64a8c29f8c1d8d1a4e8b4567"
+          },
+          "volume": {
+            "description": "Volume of water consumed in milliliters",
+            "type": "number",
+            "example": 500
+          },
+          "drinkTime": {
+            "description": "Time when the water was consumed",
+            "type": "string",
+            "format": "time",
+            "example": "15:30"
+          },
+          "createdAt": {
+            "description": "Time in Unix format when the note was created",
+            "type": "integer",
+            "format": "int64",
+            "example": 1699209600000
+          },
+          "updatedAt": {
+            "description": "Time in Unix format when the note was updated",
+            "type": "integer",
+            "format": "int64",
+            "example": 1699889600000
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Successfully found water notes",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Successful find water notes by date"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "date",
+                    "waterNotes"
+                  ],
+                  "properties": {
+                    "date": {
+                      "type": "string",
+                      "example": "2024-08-04",
+                      "description": "Date of month where water notes were searched"
+                    },
+                    "waterNotes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/water"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad Requestr",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid request payload"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Missing required field"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Entity not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Something went wrong"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

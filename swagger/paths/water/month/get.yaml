@@ -1,0 +1,24 @@
+tags:
+  - Water
+summary: Get water notes for month
+operationId: getWaterPerMonth
+description: Get water notes per month divided on days
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - date
+        properties:
+          date: 
+            description: 'Date of month where water notes will be searched'
+            type: integer
+            example: 1722772947000
+responses:
+  '200':
+    $ref: '../../../components/responses/200.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

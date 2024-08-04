@@ -5,7 +5,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: App for monitoring the amount of water counsumed
+  description: App for monitoring the amount of water consumed
 tags:
   - name: Users
     description: Operations about users.
@@ -40,9 +40,14 @@ paths:
     delete:
       $ref: ../swagger/paths/water/{id}/delete.yaml
   /water:
-    # get:
     post:
       $ref: ../swagger/paths/water/post.yaml
+  /water/day:
+    get: 
+      $ref: ../swagger/paths/water/day/get.yaml
+  /water/month:
+    get: 
+      $ref: ../swagger/paths/water/month/get.yaml
 components:
   securitySchemes:
     bearerAuth:
