@@ -11,7 +11,7 @@ export const setupSession = (res, session) => {
   const cookieOptions = {
     httpOnly: true,
     sameSite: isSafari ? 'Lax' : 'None',
-    secure: process.env.NODE_ENV === 'production', // true тільки у продакшн
+    secure: process.env.NODE_ENV === 'production',
     expires: new Date(Date.now() + ONE_DAY),
   };
 

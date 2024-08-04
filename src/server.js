@@ -14,7 +14,6 @@ const PORT = Number(process.env.PORT) ? Number(process.env.PORT) : 3000;
 export const setupServer = () => {
   const app = express();
 
-  // Налаштування CORS для дозволу передачи cookies між доменами
   const corsOptions = {
     origin: ['http://localhost:5173'], // Вказуємо всі дозволені URL фронтенду
     credentials: true, // Для передачі cookies та авторизаційних заголовків
