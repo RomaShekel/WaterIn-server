@@ -42,10 +42,10 @@ paths:
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml
-  /water/day:
+  /water/day/{time}:
     get: 
       $ref: ../swagger/paths/water/day/get.yaml
-  /water/month:
+  /water/month/{time}:
     get: 
       $ref: ../swagger/paths/water/month/get.yaml
 components:

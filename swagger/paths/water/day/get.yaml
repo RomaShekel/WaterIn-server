@@ -5,18 +5,13 @@ operationId: getWaterPerDay
 description: Get water notes per day
 security:
   - bearerAuth: []
-requestBody:
-  content:
-    application/json:
-      schema:
-        type: object
-        required:
-          - date
-        properties:
-          date: 
-            description: 'Date of day where water notes will be searched'
-            type: number
-            example: 1722772947000
+parameters:
+  - in: path
+    name: time
+    required: true
+    schema:
+      type: number
+      example: 1722772947000
 responses:
   '200':
     description: Successfully find notes on day

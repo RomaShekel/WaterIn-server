@@ -65,9 +65,9 @@ export const deleteWaterController = async (req, res, next) => {
 
 export const getWaterPerDayController = async (req, res, next) => {
   const userId = req.user._id;
-  const { date } = req.body;
+  const time = Number(req.params.time);
 
-  const notes = await getWaterPerDay(userId, date);
+  const notes = await getWaterPerDay(userId, time);
 
   if(notes.length === 0) {
     res.status(404).json({
@@ -91,9 +91,9 @@ export const getWaterPerDayController = async (req, res, next) => {
 export const getWaterPerMonthController = async (req, res, next) => {
   const userId = req.user._id;
   const userNorm = req.user.waterRate;
-  const { date } = req.body;
-  const normalFormat = format(date, 'yyyy-MM-dd')
-  const monthWaterNotes = await getWaterPerMonth(userId, userNorm, date);
+  const time = Number(req.params.time);
+  const normalFormat = format(time, 'yyyy-MM-dd')
+  const monthWaterNotes = await getWaterPerMonth(userId, userNorm, time);
   
   if (!monthWaterNotes) {
     next(createHttpError(404, `Not found notes`));
