@@ -5,6 +5,7 @@ import { isValidId } from '../utils/isValidId.js';
 import { validateBody } from '../utils/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
+  getTotalUsersController,
   getUserProfileController,
   updateUserProfileController,
 } from '../controllers/users.js';
@@ -13,6 +14,11 @@ import { authenticate } from '../middlewares/authenticate.js';
 import upload from '../middlewares/photoUpload.js';
 
 const router = Router();
+
+router.use(
+  '/',
+  ctrlWrapper(getTotalUsersController)
+);
 
 router.use(authenticate);
 
