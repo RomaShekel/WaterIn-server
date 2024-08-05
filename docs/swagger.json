@@ -289,6 +289,72 @@
         }
       }
     },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get count of all users",
+        "operationId": "countUser",
+        "description": "Count all registered users and return 3 photo of last registered users",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get count of all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully count users"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "description": "Number of all users",
+                          "example": 42
+                        },
+                        "photos": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "https://res.cloudinary.com/dqxbq53ls/image/upload/v1722796016/hsmgrbtsalatoxwijadv.jpg",
+                            "description": "path to user photo"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
     "/users/{id}": {
       "get": {
         "tags": [

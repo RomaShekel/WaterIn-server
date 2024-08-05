@@ -26,6 +26,9 @@ paths:
   /users/logout:
     post:
       $ref: ../swagger/paths/auth/{logout}/post.yaml
+  /users:
+    get: 
+      $ref: ../swagger/paths/users/getCount.yaml
   /users/{id}:
     get:
       $ref: ../swagger/paths/users/get.yaml

@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { getUserProfile, updateUserProfile } from '../services/users.js';
+import { getUserProfile, updateUserProfile, getTotalUsers } from '../services/users.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import saveFileToPublicDir from '../utils/saveFileToPublicDir.js';
 import { env } from '../utils/env.js';
@@ -16,7 +16,7 @@ export const getUserProfileController = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    message: 'User profile info retrieved succesfully',
+    message: 'User profile info retrieved successfully',
     data: UserProfile,
   });
 };
@@ -51,7 +51,25 @@ export const updateUserProfileController = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    message: 'User profile updated succesfully',
+    message: 'User profile updated successfully',
     data: user,
   });
 };
+
+export const getTotalUsersController = async (req, res, next) => {
+  const countAndPhotos = await getTotalUsers();
+
+  if(!countAndPhotos) {
+    next(createHttpError(500, 'Server error'))
+  }
+
+  if(countAndPhotos.length === 0) {
+    next(createHttpError(404, 'Users not found!'))
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully count users',
+    data: countAndPhotos,
+  })
+}
