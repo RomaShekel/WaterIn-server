@@ -289,7 +289,7 @@
         }
       }
     },
-    "/users": {
+    "/users/count": {
       "get": {
         "tags": [
           "Users"

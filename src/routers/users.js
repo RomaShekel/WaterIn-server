@@ -16,7 +16,7 @@ import upload from '../middlewares/photoUpload.js';
 const router = Router();
 
 router.use(
-  '/',
+  '/count',
   ctrlWrapper(getTotalUsersController)
 );
 
