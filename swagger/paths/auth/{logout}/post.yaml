@@ -12,6 +12,7 @@ parameters:
     schema:
       type: string
     description: Session ID of the user.
+    example: 'j%3A%2266afd9c8c4e0fac0f172245c%22'
 requestBody:
   required: true
   content:

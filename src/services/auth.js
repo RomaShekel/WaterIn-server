@@ -66,7 +66,7 @@ export const refreshUserSession = async ({ sessionId, refreshToken }) => {
     _id: sessionId,
     refreshToken,
   });
-  
+
   if (!session) {
     throw createHttpError(401, 'Session not found');
   }
@@ -98,5 +98,6 @@ export const refreshUserSession = async ({ sessionId, refreshToken }) => {
   return {
     accessToken: newAccessToken,
     refreshToken: newRefreshToken,
+    _id: sessionId,
   };
 };
