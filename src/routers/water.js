@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { isValidWaterId } from '../utils/isValidId.js';
 import { validateBody } from '../utils/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { waterAddShema, waterGetSchema, waterUpdateShema } from '../validations/water.js';
+import { waterAddShema, waterUpdateShema } from '../validations/water.js';
 import {
   addWaterController,
   deleteWaterController,
@@ -18,14 +18,12 @@ const router = Router();
 router.use(authenticate);
 
 router.get(
-  '/month',
-  validateBody(waterGetSchema),
+  '/month/:time',
   ctrlWrapper(getWaterPerMonthController)
 );
 
 router.get(
-  '/day',
-  validateBody(waterGetSchema),
+  '/day/:time',
   ctrlWrapper(getWaterPerDayController));
 
 router.post('/', validateBody(waterAddShema), ctrlWrapper(addWaterController));
