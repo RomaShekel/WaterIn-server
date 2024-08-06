@@ -3,8 +3,7 @@ tags:
 summary: Get count of all users
 operationId: countUser
 description: Count all registered users and return 3 photo of last registered users
-security:
-  - bearerAuth: []
+security: []
 responses:
   '200':
     description: Get count of all users
@@ -40,5 +39,3 @@ responses:
                 
   '404':
     $ref: '../../components/responses/404.yaml'
-  '401':
-    $ref: '../../components/responses/401.yaml'

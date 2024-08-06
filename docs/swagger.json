@@ -159,11 +159,7 @@
         "summary": "User login",
         "operationId": "loginUser",
         "description": "User login",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -297,11 +293,7 @@
         "summary": "Get count of all users",
         "operationId": "countUser",
         "description": "Count all registered users and return 3 photo of last registered users",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "responses": {
           "200": {
             "description": "Get count of all users",
@@ -345,9 +337,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
