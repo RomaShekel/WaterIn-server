@@ -993,6 +993,11 @@
           "data": {
             "type": "object",
             "properties": {
+              "userId": {
+                "description": "User id",
+                "type": "string",
+                "example": "66ae5e4b60080f8db63bb8ed"
+              },
               "name": {
                 "description": "User name",
                 "type": "string",
