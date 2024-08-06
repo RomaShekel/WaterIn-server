@@ -10,10 +10,14 @@ import {
 
 export const addWaterNote = async (note) => {
   const data = await WaterNotesCollection.create(note);
+  console.log(note);
+  console.log(Date.now())
   return data;
 };
 
 export const updateWaterNote = async (filter, payload, options) => {
+  console.log(payload);
+  console.log(Date.now())
   const data = await WaterNotesCollection.findOneAndUpdate(filter, payload, {
     ...options,
   });
@@ -104,6 +108,6 @@ export const getWaterPerMonth = async (userId, userNorm = 1500, time) => {
     const entry = monthWater.find(item => item.date === date.date);
     return entry ? entry : { ...date };
   });
-
+  console.log(result)
   return result;
 }

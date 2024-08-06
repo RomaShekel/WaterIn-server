@@ -24,6 +24,8 @@ export const updateWaterController = async (req, res, next) => {
   const { waterId } = req.params;
 
   const userId = req.user._id;
+  console.log(userId);
+  console.log(req.body)
 
   const data = await updateWaterNote(
     {
