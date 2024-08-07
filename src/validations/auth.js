@@ -20,3 +20,7 @@ export const loginUserSchema = Joi.object({
   'string.email': 'Field {#label} must be a valid email address.',
   'any.required': 'missing required {#label} field',
 });
+
+export const loginWithGoogleOAuthSchema = Joi.object({
+  code: Joi.string().required(),
+});
