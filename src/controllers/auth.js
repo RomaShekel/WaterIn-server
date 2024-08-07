@@ -15,6 +15,7 @@ export const registerUserController = async (req, res) => {
   setupSession(res, session);
 
   const data = {
+    userId: user._id,
     name: user.name,
     email: user.email,
     photo: user.photo,
@@ -38,13 +39,6 @@ export const loginUserController = async (req, res) => {
 
   const user = {
     userId: session.userId,
-    name: session.name,
-    email: session.email,
-    photo: session.photo,
-    sportHours: session.sportHours,
-    weight: session.weight,
-    waterRate: session.waterRate,
-    gender: session.gender,
   };
 
   res.json({
