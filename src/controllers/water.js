@@ -97,9 +97,16 @@ export const getWaterPerMonthController = async (req, res, next) => {
   const normalFormat = format(time, 'yyyy-MM-dd')
   const monthWaterNotes = await getWaterPerMonth(userId, userNorm, time);
   
+  if (monthWaterNotes.length === 0) {
+    req.status(200).json({
+      status:200,
+      message: 'Water notes not found!',
+      data: monthWaterNotes,
+    })
+  };
+
   if (!monthWaterNotes) {
-    next(createHttpError(404, `Not found notes`));
-    return;
+    next(createHttpError(500, 'Server error'))
   };
 
   res.status(200).json({
