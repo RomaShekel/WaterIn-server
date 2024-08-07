@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/model/users.js';
+import { SessionsCollection } from '../db/model/sessions.js';
 
 
 export const getUserProfile = async (userId) => {
@@ -7,7 +8,23 @@ export const getUserProfile = async (userId) => {
   if (!user) {
     throw createHttpError(404, 'User not found');
   }
-  return user;
+
+  const session = await SessionsCollection.find({userId: user._id})
+
+  if (!session) {
+    throw createHttpError(401, 'Session not found');
+  }
+
+  const isSessionTokenExpired =
+    new Date() > new Date(session.refreshTokenValidUntil);
+
+  if (isSessionTokenExpired) {
+    throw createHttpError(401, 'Session token expired');
+  }
+  return {
+    user,
+    accessToken: session[0].accessToken,
+  };
 };
 
 export const updateUserProfile = async (userId, updatedData) => {
