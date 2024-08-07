@@ -32,12 +32,14 @@ export const deleteWaterNote = async (filter) => {
 
 export const getWaterPerDay = async (userId, day) => {
   const date = new Date(day);
+  // const test = new Date('2024-08-01').getTime()
 
   const resetDay = startOfDay(date)
   const endDay = endOfDay(date)
   const dayStartInUnix = getUnixTime(resetDay) * 1000;
   const dayEndInUnix = getUnixTime(endDay) * 1000;
 
+  
   const dayWater = await WaterNotesCollection
   .find({userId: userId})
   .where('createdAt')
@@ -51,9 +53,13 @@ export const getWaterPerDay = async (userId, day) => {
 
 export const getWaterPerMonth = async (userId, userNorm = 1500, time) => {
   const date = new Date(time);
+console.log(format(date, 'yyyy-MM-dd'))
 
   const resetMonth = startOfMonth(date);
   const endMonth = endOfMonth(date)
+
+  console.log(resetMonth)
+  console.log(endMonth)
   const monthStartInUnix = getUnixTime(resetMonth) * 1000;
   const monthEndInUnix = getUnixTime(endMonth) * 1000;
 
@@ -62,7 +68,7 @@ export const getWaterPerMonth = async (userId, userNorm = 1500, time) => {
       $match: {
         userId: userId,
         createdAt: {
-          $gt: monthStartInUnix,
+          $gte: monthStartInUnix,
           $lte: monthEndInUnix
         }
       }
@@ -103,6 +109,7 @@ export const getWaterPerMonth = async (userId, userNorm = 1500, time) => {
     dates.push({ date: format(currentDate, 'yyyy-MM-dd'), dayVolume: 0, percent: 0 });
     currentDate = currentDate + 86400000;
   }
+  console.log(dates);
   
   const result = dates.map(date => {
     const entry = monthWater.find(item => item.date === date.date);
