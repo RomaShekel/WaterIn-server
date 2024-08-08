@@ -2,15 +2,25 @@
 import { Router } from 'express';
 import { validateBody } from '../utils/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { verifyEmail } from '../utils/verifyEmail.js';
 import {
   loginUserController,
   logoutUserController,
   registerUserController,
   refreshTokenController,
+  googleRedirect,
+  googleAuth,
 } from '../controllers/auth.js';
+
 import { loginUserSchema, registerUserSchema } from '../validations/auth.js';
 
 const router = Router();
+
+router.get('/verify/:verificationToken', verifyEmail);
+
+router.get('/google', googleAuth);
+
+router.get('/google-redirect', googleRedirect);
 
 router.post(
   '/register',

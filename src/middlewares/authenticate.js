@@ -4,6 +4,10 @@ import { SessionsCollection } from '../db/model/sessions.js';
 import { UsersCollection } from '../db/model/users.js';
 
 export const authenticate = async (req, res, next) => {
+  if (req.path === '/refresh') {
+    return next();
+  }
+
   const authHeader = req.get('Authorization');
 
   if (!authHeader) {

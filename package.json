@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/RomaShekel/WaterIn-server#readme",
   "dependencies": {
-    "nodemon": "^3.1.4",
+    "axios": "^1.7.3",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.4.0",
     "cookie-parser": "^1.4.6",
@@ -37,7 +37,7 @@
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "google-auth-library": "^9.11.0",
+    "google-auth-library": "^9.13.0",
     "handlebars": "^4.7.8",
     "http": "^0.0.1-security",
     "http-errors": "^2.0.0",
@@ -46,9 +46,11 @@
     "mongoose": "^8.4.5",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.14",
+    "nodemon": "^3.1.4",
     "pino": "^9.3.2",
     "pino-http": "^10.2.0",
     "pino-pretty": "^11.2.2",
+    "query-string": "^9.1.0",
     "swagger-ui-express": "^5.0.1"
   }
 }
