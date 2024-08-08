@@ -1,2 +1,0 @@
-1. https://github.com/RomaShekel/WaterIn-server/pull/2
-2. https://github.com/RomaShekel/WaterIn-server/pull/9
