@@ -10,9 +10,14 @@ import {
   refreshTokenController,
   googleRedirect,
   googleAuth,
+  verificationUserEmailController,
 } from '../controllers/auth.js';
 
-import { loginUserSchema, registerUserSchema } from '../validations/auth.js';
+import {
+  loginUserSchema,
+  registerUserSchema,
+  verificationEmailShema,
+} from '../validations/auth.js';
 
 const router = Router();
 
@@ -37,6 +42,12 @@ router.post(
 router.post('/refresh', ctrlWrapper(refreshTokenController));
 
 router.post('/logout', ctrlWrapper(logoutUserController));
+
+router.post(
+  '/send-verification-email',
+  validateBody(verificationEmailShema),
+  ctrlWrapper(verificationUserEmailController),
+);
 
 // router.post(
 //     '/send-reset-email',
