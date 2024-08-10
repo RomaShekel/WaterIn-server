@@ -10,6 +10,7 @@ import {
   refreshTokenController,
   googleRedirect,
   googleAuth,
+  refreshUserController,
 } from '../controllers/auth.js';
 
 import { loginUserSchema, registerUserSchema } from '../validations/auth.js';
@@ -37,6 +38,8 @@ router.post(
 router.post('/refresh', ctrlWrapper(refreshTokenController));
 
 router.post('/logout', ctrlWrapper(logoutUserController));
+
+router.post('/refresh-user', ctrlWrapper(refreshUserController))
 
 // router.post(
 //     '/send-reset-email',

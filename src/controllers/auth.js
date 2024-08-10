@@ -10,6 +10,7 @@ import {
   logoutUser,
   registerUser,
   refreshUserSession,
+  refreshUser
 } from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
 
@@ -79,7 +80,7 @@ export const refreshTokenController = async (req, res) => {
   const { refreshToken, sessionId } = req.cookies;
 
   if (!refreshToken || !sessionId) {
-    throw createHttpError(400);
+    res.status(409);
   }
 
   const session = await refreshUserSession({
@@ -89,14 +90,36 @@ export const refreshTokenController = async (req, res) => {
 
   setupSession(res, session);
 
-  res.json({
-    status: 200,
+  res.status(208).json({
+    status: 208,
     message: 'Token successfully refreshed',
     data: {
       accessToken: session.accessToken,
     },
   });
 };
+
+export const refreshUserController = async (req, res) => {
+  const sessionId = req.cookies.sessionId;
+  const refreshToken = req.cookies.refreshToken;
+
+  if(!sessionId || !refreshToken) {
+    res.status(207);
+  }
+
+  const user = await refreshUser(sessionId, refreshToken);
+console.log(user)
+
+  if(user === null || !user) {
+    res.status(207)
+  }
+
+  res.status(209).json({
+    status: 209,
+    message: 'User in',
+    data: user
+  })
+}
 
 export const googleAuth = async (req, res) => {
   const stringifiedParams = queryString.stringify({
