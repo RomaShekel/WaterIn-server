@@ -41,7 +41,10 @@ export const updateUserProfile = async (userId, updatedData) => {
 export const getTotalUsers = async () => {
 
   const count = await UsersCollection.estimatedDocumentCount();
-  const treeLastUsers = await UsersCollection.find().sort({createdAt: -1}).limit(3);
+  const treeLastUsers = await UsersCollection.aggregate([
+    { $sample: { size: 3 } },
+    { $unset: "password" }
+  ])
 
   const photos = treeLastUsers.map(user => { return user.photo});
   
