@@ -4,7 +4,9 @@ import createHttpError from 'http-errors';
 
 import { UsersCollection } from '../db/model/users.js';
 import { SessionsCollection } from '../db/model/sessions.js';
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
+import { FIFTEEN_MINUTES, ONE_DAY, SMTP } from '../constants/index.js';
+import { env } from '../utils/env.js';
+import { sendEmail } from '../utils/sendMail.js';
 
 export const registerUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
@@ -102,6 +104,20 @@ export const refreshUserSession = async ({ sessionId, refreshToken }) => {
   };
 };
 
+export const verificationUserEmail = async (email) => {
+  const user = await UsersCollection.findOne({ email });
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  await sendEmail({
+    from: env(SMTP.SMTP_FROM),
+    to: email,
+    subject: 'Email verification',
+    html: `<p>Please click <a href="https://water-in.vercel.app/">here</a> to confirm your email!</p>`,
+  });
+};
+
 export const refreshUser = async (sessionId, refreshToken) => {
 
   const session = await SessionsCollection.findOne({ _id: sessionId, refreshToken: refreshToken });
@@ -124,3 +140,4 @@ export const refreshUser = async (sessionId, refreshToken) => {
 
   return {user, accessToken:session.accessToken};
 }
+

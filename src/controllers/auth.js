@@ -10,6 +10,7 @@ import {
   logoutUser,
   registerUser,
   refreshUserSession,
+  verificationUserEmail,
   refreshUser
 } from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
@@ -189,4 +190,13 @@ export const googleRedirect = async (req, res) => {
   return res.redirect(
     `${process.env.FRONTEND_URL}/verify-email?token=${token}&refreshToken=${refreshToken}`,
   );
+};
+
+export const verificationUserEmailController = async (req, res) => {
+  await verificationUserEmail(req.body.email);
+  res.json({
+    message: 'The verification email has been successfully sent!',
+    status: 200,
+    data: {},
+  });
 };
