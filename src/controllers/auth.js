@@ -184,29 +184,22 @@ export const googleRedirect = async (req, res) => {
   const newRefreshToken = randomBytes(30).toString('base64');
   const data = JSON.stringify(user);
 
+  await UsersCollection.findByIdAndUpdate(user._id, {
+    token: newAccessToken,
+    refreshToken: newRefreshToken,
+  });
+
   const session = await SessionsCollection.create({
     userId: user._id,
-    name: user.name,
-    email: user.email,
-    photo: user.photo,
-    sportHours: user.sportHours,
-    weight: user.weight,
-    waterRate: user.waterRate,
-    gender: user.gender,
     accessToken: newAccessToken,
     refreshToken: newRefreshToken,
     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   });
 
-  setupSession(res, session);
-
-  await UsersCollection.findByIdAndUpdate(user._id, {
-    token: newAccessToken,
-    refreshToken: newRefreshToken,
-  });
+  await setupSession(res, session);
 
   return res.redirect(
-    `${process.env.FRONTEND_URL}/verify-email?token=${newAccessToken}&refreshToken=${newRefreshToken}&data=${data}`,
+    `${process.env.FRONTEND_URL}/verify-email?accessToken=${newAccessToken}&refreshToken=${newRefreshToken}&data=${data}`,
   );
 };
