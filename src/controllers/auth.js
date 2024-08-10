@@ -11,7 +11,7 @@ import {
   registerUser,
   refreshUserSession,
   verificationUserEmail,
-  refreshUser
+  refreshUser,
 } from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
 
@@ -104,23 +104,23 @@ export const refreshUserController = async (req, res) => {
   const sessionId = req.cookies.sessionId;
   const refreshToken = req.cookies.refreshToken;
 
-  if(!sessionId || !refreshToken) {
+  if (!sessionId || !refreshToken) {
     res.status(207);
   }
 
   const user = await refreshUser(sessionId, refreshToken);
-console.log(user)
+  console.log(user);
 
-  if(user === null || !user) {
-    res.status(207)
+  if (user === null || !user) {
+    res.status(207);
   }
 
   res.status(209).json({
     status: 209,
     message: 'User in',
-    data: user
-  })
-}
+    data: user,
+  });
+};
 
 export const googleAuth = async (req, res) => {
   const stringifiedParams = queryString.stringify({
@@ -179,16 +179,29 @@ export const googleRedirect = async (req, res) => {
     });
   }
 
-  const payload = { id: user._id };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
-  const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY, {
-    expiresIn: '30d',
+  await SessionsCollection.deleteOne({ userId: user._id });
+
+  const newAccessToken = randomBytes(30).toString('base64');
+  const newRefreshToken = randomBytes(30).toString('base64');
+  const data = JSON.stringify(user);
+
+  await UsersCollection.findByIdAndUpdate(user._id, {
+    token: newAccessToken,
+    refreshToken: newRefreshToken,
   });
 
-  await UsersCollection.findByIdAndUpdate(user._id, { token, refreshToken });
+  const session = await SessionsCollection.create({
+    userId: user._id,
+    accessToken: newAccessToken,
+    refreshToken: newRefreshToken,
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
+  });
+
+  await setupSession(res, session);
 
   return res.redirect(
-    `${process.env.FRONTEND_URL}/verify-email?token=${token}&refreshToken=${refreshToken}`,
+    `${process.env.FRONTEND_URL}/verify-email?accessToken=${newAccessToken}&refreshToken=${newRefreshToken}&data=${data}`,
   );
 };
 
