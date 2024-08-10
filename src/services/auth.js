@@ -68,14 +68,14 @@ export const refreshUserSession = async ({ sessionId, refreshToken }) => {
   });
 
   if (!session) {
-    throw createHttpError(409, 'Session not found12');
+    throw createHttpError(408, 'Session not found12');
   }
 
   const isSessionTokenExpired =
     new Date() > new Date(session.refreshTokenValidUntil);
 
   if (isSessionTokenExpired) {
-    throw createHttpError(409, 'Session token expired');
+    throw createHttpError(408, 'Session token expired');
   }
 
   const newAccessToken = randomBytes(30).toString('base64');
