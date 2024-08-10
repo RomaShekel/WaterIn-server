@@ -106,9 +106,9 @@ export const refreshUser = async (sessionId, refreshToken) => {
 
   const session = await SessionsCollection.findOne({ _id: sessionId, refreshToken: refreshToken });
 
-  if (!session) {
-    return null;
-  }
+  // if (!session) {
+  //   return null;
+  // }
 // console.log(session)
   const isRefreshTokenExpired = new Date() > new Date(session.refreshTokenValidUntil);
 
