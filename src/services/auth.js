@@ -70,14 +70,14 @@ export const refreshUserSession = async ({ sessionId, refreshToken }) => {
   });
 
   if (!session) {
-    throw createHttpError(401, 'Session not found');
+    throw createHttpError(408, 'Session not found12');
   }
 
   const isSessionTokenExpired =
     new Date() > new Date(session.refreshTokenValidUntil);
 
   if (isSessionTokenExpired) {
-    throw createHttpError(401, 'Session token expired');
+    throw createHttpError(408, 'Session token expired');
   }
 
   const newAccessToken = randomBytes(30).toString('base64');
@@ -117,3 +117,27 @@ export const verificationUserEmail = async (email) => {
     html: `<p>Please click <a href="https://water-in.vercel.app/">here</a> to confirm your email!</p>`,
   });
 };
+
+export const refreshUser = async (sessionId, refreshToken) => {
+
+  const session = await SessionsCollection.findOne({ _id: sessionId, refreshToken: refreshToken });
+
+  // if (!session) {
+  //   return null;
+  // }
+// console.log(session)
+  const isRefreshTokenExpired = new Date() > new Date(session.refreshTokenValidUntil);
+
+  if(isRefreshTokenExpired) {
+    return null;
+  }
+
+  const user = await UsersCollection.findOne({_id:session.userId}).select('-password')
+
+  if(!user) {
+    return null
+  }
+
+  return {user, accessToken:session.accessToken};
+}
+

@@ -11,6 +11,7 @@ import {
   googleRedirect,
   googleAuth,
   verificationUserEmailController,
+  refreshUserController,
 } from '../controllers/auth.js';
 
 import {
@@ -48,6 +49,9 @@ router.post(
   validateBody(verificationEmailShema),
   ctrlWrapper(verificationUserEmailController),
 );
+
+router.post('/refresh-user', ctrlWrapper(refreshUserController))
+
 
 // router.post(
 //     '/send-reset-email',

@@ -32,7 +32,6 @@ export const deleteWaterNote = async (filter) => {
 
 export const getWaterPerDay = async (userId, day) => {
   const date = new Date(day);
-  // const test = new Date('2024-08-01').getTime()
 
   const resetDay = startOfDay(date)
   const endDay = endOfDay(date)
