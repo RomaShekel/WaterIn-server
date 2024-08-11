@@ -4,7 +4,7 @@ import {
   deleteWaterNote,
   updateWaterNote,
   getWaterPerMonth,
-  getWaterPerDay
+  getWaterPerDay,
 } from '../services/water.js';
 import { format } from 'date-fns';
 
@@ -25,7 +25,7 @@ export const updateWaterController = async (req, res, next) => {
 
   const userId = req.user._id;
   console.log(userId);
-  console.log(req.body)
+  console.log(req.body);
 
   const data = await updateWaterNote(
     {
@@ -56,13 +56,16 @@ export const deleteWaterController = async (req, res, next) => {
   const userId = req.user._id;
 
   const data = await deleteWaterNote({ _id: waterId, userId });
-
   if (!data) {
     next(createHttpError(404, `Water note with id ${waterId} not found`));
     return;
   }
 
-  res.status(204).send();
+  res.status(201).json({
+    data: {
+      _id: data._id,
+    },
+  });
 };
 
 export const getWaterPerDayController = async (req, res, next) => {
@@ -71,44 +74,44 @@ export const getWaterPerDayController = async (req, res, next) => {
 
   const notes = await getWaterPerDay(userId, time);
 
-  if(notes.length === 0) {
+  if (notes.length === 0) {
     res.status(200).json({
-      status:200,
+      status: 200,
       message: 'Water notes not found',
-      data: notes
-    })
+      data: notes,
+    });
   }
 
-  if(!notes) {
-    next(createHttpError(500, 'Server error'))
+  if (!notes) {
+    next(createHttpError(500, 'Server error'));
   }
-  
+
   res.status(200).json({
-    status:200,
+    status: 200,
     message: 'Successful find water notes!',
-    data: notes
-  })
-}
+    data: notes,
+  });
+};
 
 export const getWaterPerMonthController = async (req, res, next) => {
   const userId = req.user._id;
   const userNorm = req.user.waterRate;
   const time = Number(req.params.time);
-  const normalFormat = format(time, 'yyyy-MM-dd')
+  const normalFormat = format(time, 'yyyy-MM-dd');
   const monthWaterNotes = await getWaterPerMonth(userId, userNorm, time);
   console.log(monthWaterNotes);
-  
+
   if (monthWaterNotes.length === 0) {
     res.status(200).json({
-      status:200,
+      status: 200,
       message: 'Water notes not found!',
       data: monthWaterNotes,
-    })
-  };
+    });
+  }
 
   if (!monthWaterNotes) {
-    next(createHttpError(500, 'Server error'))
-  };
+    next(createHttpError(500, 'Server error'));
+  }
 
   res.status(200).json({
     status: 200,
@@ -116,7 +119,6 @@ export const getWaterPerMonthController = async (req, res, next) => {
     data: {
       date: normalFormat,
       waterNotes: monthWaterNotes,
-    }
-  })
-
-}
+    },
+  });
+};
