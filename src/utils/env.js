@@ -14,6 +14,7 @@ export const ENV_VARS = {
   SMTP_PASS: 'SMTP_PASS',
 };
 
+
 export const env = (name) => {
   const value = process.env[name];
 
