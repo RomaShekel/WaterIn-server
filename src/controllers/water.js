@@ -76,9 +76,9 @@ export const getWaterPerDayController = async (req, res, next) => {
   const notes = await getWaterPerDay(stringUser, time);
 
   if (notes.length === 0) {
-    res.status(404).json({
-      status: 404,
-      message: 'Water notes not found',
+    res.status(200).json({
+      status: 200,
+      message: 'Water notes on this day not found',
       data: notes,
     });
     return
