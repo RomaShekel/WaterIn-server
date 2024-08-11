@@ -1,8 +1,10 @@
 import createHttpError from 'http-errors';
 import queryString from 'query-string';
 import axios from 'axios';
-import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import jwt from 'jsonwebtoken';
+import { nanoid } from 'nanoid';
+
 import { UsersCollection } from '../db/model/users.js';
 
 import {
@@ -14,6 +16,8 @@ import {
   refreshUser,
 } from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
+import { SessionsCollection } from '../db/model/sessions.js';
+import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -144,8 +148,11 @@ export const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
 
   const urlObj = new URL(fullUrl);
-  const urlParams = queryString.parse(urlObj.search);
-  const code = urlParams.code;
+  const code = urlObj.searchParams.get('code');
+
+  if (!code) {
+    throw new Error('Authorization code not found');
+  }
 
   const tokenData = await axios({
     url: 'https://oauth2.googleapis.com/token',
@@ -159,30 +166,52 @@ export const googleRedirect = async (req, res) => {
     },
   });
 
-  let userData = await axios({
+  const accessToken = tokenData.data.access_token;
+
+  if (!accessToken) {
+    throw new Error('Failed to retrieve google access token');
+  }
+
+  const userData = await axios({
     url: 'https://www.googleapis.com/oauth2/v2/userinfo',
     method: 'get',
     headers: {
-      Authorization: `Bearer ${tokenData.data.access_token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 
-  const { email, name } = userData.data;
+  const { email, name, picture } = userData.data;
 
   let user = await UsersCollection.findOne({ email });
 
   if (!user) {
     user = await UsersCollection.create({
-      email,
       name,
-      password: '',
+      email,
+      password: nanoid(),
+      photo: picture,
+      isGoogleUser: true,
     });
+  } else {
+    if (!user.isGoogleUser) {
+      user = await UsersCollection.findByIdAndUpdate(user._id, {
+        name,
+        photo: picture,
+        isGoogleUser: true,
+      });
+    }
   }
 
   await SessionsCollection.deleteOne({ userId: user._id });
 
-  const newAccessToken = randomBytes(30).toString('base64');
-  const newRefreshToken = randomBytes(30).toString('base64');
+  const payload = { id: user._id };
+  const newAccessToken = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: '1d',
+  });
+  const newRefreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY, {
+    expiresIn: '30d',
+  });
+
   const data = JSON.stringify(user);
 
   await UsersCollection.findByIdAndUpdate(user._id, {

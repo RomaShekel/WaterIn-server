@@ -16,10 +16,7 @@ const usersSchema = new Schema(
     weight: { type: Number, default: 0 },
     waterRate: { type: Number, default: 1500 },
     gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
+    isGoogleUser: { type: Boolean, default: false },
   },
   { timestamps: true, versionKey: false },
 );
