@@ -15,6 +15,7 @@ export const waterAddShema = Joi.object({
     'string.empty': 'volume is required',
     'any.required': 'volume is required',
   }),
+  createdAt: Joi.number().required()
 });
 
 export const waterUpdateShema = Joi.object({
