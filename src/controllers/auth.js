@@ -1,10 +1,8 @@
 import createHttpError from 'http-errors';
 import queryString from 'query-string';
 import axios from 'axios';
-import 'dotenv/config';
 import jwt from 'jsonwebtoken';
-import { nanoid } from 'nanoid';
-
+import 'dotenv/config';
 import { UsersCollection } from '../db/model/users.js';
 
 import {
@@ -13,11 +11,9 @@ import {
   registerUser,
   refreshUserSession,
   verificationUserEmail,
-  refreshUser,
+  refreshUser
 } from '../services/auth.js';
 import { setupSession } from '../utils/setupSession.js';
-import { SessionsCollection } from '../db/model/sessions.js';
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -108,23 +104,23 @@ export const refreshUserController = async (req, res) => {
   const sessionId = req.cookies.sessionId;
   const refreshToken = req.cookies.refreshToken;
 
-  if (!sessionId || !refreshToken) {
+  if(!sessionId || !refreshToken) {
     res.status(207);
   }
 
   const user = await refreshUser(sessionId, refreshToken);
-  console.log(user);
+console.log(user)
 
-  if (user === null || !user) {
-    res.status(207);
+  if(user === null || !user) {
+    res.status(207)
   }
 
   res.status(209).json({
     status: 209,
     message: 'User in',
-    data: user,
-  });
-};
+    data: user
+  })
+}
 
 export const googleAuth = async (req, res) => {
   const stringifiedParams = queryString.stringify({
@@ -148,11 +144,8 @@ export const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
 
   const urlObj = new URL(fullUrl);
-  const code = urlObj.searchParams.get('code');
-
-  if (!code) {
-    throw new Error('Authorization code not found');
-  }
+  const urlParams = queryString.parse(urlObj.search);
+  const code = urlParams.code;
 
   const tokenData = await axios({
     url: 'https://oauth2.googleapis.com/token',
@@ -166,71 +159,36 @@ export const googleRedirect = async (req, res) => {
     },
   });
 
-  const accessToken = tokenData.data.access_token;
-
-  if (!accessToken) {
-    throw new Error('Failed to retrieve google access token');
-  }
-
-  const userData = await axios({
+  let userData = await axios({
     url: 'https://www.googleapis.com/oauth2/v2/userinfo',
     method: 'get',
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   });
 
-  const { email, name, picture } = userData.data;
+  const { email, name } = userData.data;
 
   let user = await UsersCollection.findOne({ email });
 
   if (!user) {
     user = await UsersCollection.create({
-      name,
       email,
-      password: nanoid(),
-      photo: picture,
-      isGoogleUser: true,
+      name,
+      password: '',
     });
-  } else {
-    if (!user.isGoogleUser) {
-      user = await UsersCollection.findByIdAndUpdate(user._id, {
-        name,
-        photo: picture,
-        isGoogleUser: true,
-      });
-    }
   }
 
-  await SessionsCollection.deleteOne({ userId: user._id });
-
   const payload = { id: user._id };
-  const newAccessToken = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '1d',
-  });
-  const newRefreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY, {
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET_KEY, {
     expiresIn: '30d',
   });
 
-  const data = JSON.stringify(user);
-
-  await UsersCollection.findByIdAndUpdate(user._id, {
-    token: newAccessToken,
-    refreshToken: newRefreshToken,
-  });
-
-  const session = await SessionsCollection.create({
-    userId: user._id,
-    accessToken: newAccessToken,
-    refreshToken: newRefreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
-  });
-
-  await setupSession(res, session);
+  await UsersCollection.findByIdAndUpdate(user._id, { token, refreshToken });
 
   return res.redirect(
-    `${process.env.FRONTEND_URL}/verify-email?accessToken=${newAccessToken}&refreshToken=${newRefreshToken}&data=${data}`,
+    `${process.env.FRONTEND_URL}/verify-email?token=${token}&refreshToken=${refreshToken}`,
   );
 };
 

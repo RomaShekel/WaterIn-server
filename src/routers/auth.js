@@ -2,7 +2,7 @@
 import { Router } from 'express';
 import { validateBody } from '../utils/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-
+import { verifyEmail } from '../utils/verifyEmail.js';
 import {
   loginUserController,
   logoutUserController,
@@ -21,6 +21,8 @@ import {
 } from '../validations/auth.js';
 
 const router = Router();
+
+router.get('/verify/:verificationToken', verifyEmail);
 
 router.get('/google', googleAuth);
 
@@ -48,7 +50,8 @@ router.post(
   ctrlWrapper(verificationUserEmailController),
 );
 
-router.post('/refresh-user', ctrlWrapper(refreshUserController));
+router.post('/refresh-user', ctrlWrapper(refreshUserController))
+
 
 // router.post(
 //     '/send-reset-email',
