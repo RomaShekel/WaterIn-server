@@ -464,7 +464,7 @@
                     "example": 70
                   },
                   "waterRate": {
-                    "description": "User's daily water intake rate in liters",
+                    "description": "User's daily water intake rate in milliliters",
                     "type": "number",
                     "example": 2.5
                   },
