@@ -10,7 +10,7 @@ const usersSchema = new Schema(
     photo: {
       type: String,
       default:
-        'https://res.cloudinary.com/dqxbq53ls/image/upload/v1722796016/hsmgrbtsalatoxwijadv.jpg',
+        'https://res.cloudinary.com/dqxbq53ls/image/upload/v1723561689/wokn8c61sgozh0cgy5go.png',
     },
     sportHours: { type: Number, default: 0 },
     weight: { type: Number, default: 0 },
