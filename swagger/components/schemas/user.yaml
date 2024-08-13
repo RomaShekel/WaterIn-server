@@ -10,29 +10,38 @@ properties:
       name:
         description: 'User name'
         type: string
+        minLength: 3
+        maxLength: 20
         example: 'John Doe'
         default: User
       email:
         description: 'User email'
         type: string
+        pattern: email
         example: 'example@mail.com'
       photo:
         description: "Link to user's photo"
         type: string
-        example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+        example: "https://res.cloudinary.com/dqxbq53ls/image/upload/v1723561689/wokn8c61sgozh0cgy5go.png"
       sportHours:
         description: "User's sport hours"
         type: number
+        minimum: 1
+        maximum: 10
         example: 2
         default: 0
       weight:
         description: "User's weight"
         type: number
+        minimum: 35
+        maximum: 150
         example: 82
         default: 0
       waterRate:
         description: 'Amount of water'
         type: number
+        minimum: 500
+        maximum: 5000
         example: 1500
         default: 1500
       gender:
@@ -40,6 +49,10 @@ properties:
         type: string
         enum: ['woman', 'man']
         default: woman
+      isGoogleUser: 
+        description: 'Is user registered trow google auth'
+        type: boolean
+        default: false
   accessToken:
     type: string
     example: N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6

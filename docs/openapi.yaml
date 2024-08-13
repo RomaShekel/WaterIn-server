@@ -15,7 +15,6 @@ tags:
     description: Auth operations.
 servers:
   - url: https://waterin-server.onrender.com
-  # - url: server path not config yet
 paths:
   /users/register:
     post:
@@ -37,6 +36,9 @@ paths:
   /users/refresh:
     post:
       $ref: '../swagger/paths/auth/refresh-token.yaml'
+  /users/refresh-user:
+    post: 
+      $ref: '../swagger/paths/auth/refresh-userData.yaml'
   /water/{id}:
     patch:
       $ref: ../swagger/paths/water/{id}/patch.yaml

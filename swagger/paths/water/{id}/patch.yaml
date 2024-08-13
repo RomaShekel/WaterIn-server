@@ -14,6 +14,8 @@ requestBody:
           volume:
             description: 'Volume of water consumed in milliliters'
             type: number
+            minimum: 1
+            maximum: 1000
             example: 500
           drinkTime:
             description: 'Updated time when the water was consumed'

@@ -2,7 +2,7 @@ tags:
   - Users
 summary: Get count of all users
 operationId: countUser
-description: Count all registered users and return 3 photo of last registered users
+description: Count all registered users and return 3 photo of random users
 security: []
 responses:
   '200':
@@ -33,7 +33,7 @@ responses:
                   type: array
                   items:
                     type: string
-                    example: 'https://res.cloudinary.com/dqxbq53ls/image/upload/v1722796016/hsmgrbtsalatoxwijadv.jpg'
+                    example: 'https://res.cloudinary.com/dqxbq53ls/image/upload/v1723561689/wokn8c61sgozh0cgy5go.png'
                     description: path to user photo
 
                 

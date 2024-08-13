@@ -21,14 +21,19 @@ requestBody:
           name:
             description: "User's name"
             type: string
+            minLength: 3
+            maxLength: 20
             example: 'John Doe'
           email:
             description: "User's email"
             type: string
+            pattern: email
             example: 'googl@gmail.com'
           sportHours:
             description: 'Hours of sport activities per week'
             type: number
+            minimum: 1
+            maximum: 10
             example: 5
           gender:
             description: "User's gender"
@@ -37,11 +42,15 @@ requestBody:
           weight:
             description: "User's weight in kg"
             type: number
+            minimum: 35
+            maximum: 150
             example: 70
           waterRate:
-            description: "User's daily water intake rate in liters"
+            description: "User's daily water intake rate in milliliters"
             type: number
-            example: 2.5
+            minimum: 500
+            maximum: 5000
+            example: 1900
           photo:
             description: "User's photo"
             type: string
@@ -66,6 +75,7 @@ responses:
               example: 'Successfully updated a user!'
             data:
               type: object
+              $ref: ../../components/schemas/user.yaml
   '404':
     $ref: ../../components/responses/404.yaml
   '401':

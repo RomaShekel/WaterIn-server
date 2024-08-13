@@ -3,7 +3,7 @@ import { emailRegexp } from '../constants/user.js';
 
 export const registerUserSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().min(8).required(),
 }).messages({
   'string.base': 'Field {#label} must be a string.',
   'string.empty': 'Field {#label} cannot be empty.',

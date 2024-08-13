@@ -1,8 +1,8 @@
 tags:
-  - Auth
-summary: Refresh the authentication token
-operationId: refreshToken
-description: Obtain a new authentication token using a refresh token
+  - Auth 
+summary: Get refresh user data
+operationId: refreshUser
+description: Get user's refreshed data
 security:
   - bearerAuth: []
 parameters:
@@ -43,12 +43,13 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully refreshed a session!
+              example: Successfully refreshed a user!
             data:
               type: object
               properties:
-                accessToken:
-                  type: string
-                  example: yKJRYGuruk+EUYeXJyU/+SUMfICpe0NT/say3guZ
+                user:
+                  type: object
+                  $ref: '../../components/schemas/user.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
+  
