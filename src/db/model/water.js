@@ -10,4 +10,9 @@ const waterNoteSchema = new Schema(
   { versionKey: false },
 );
 
+waterNoteSchema.pre('findOneAndUpdate', function(next) {
+  this.set({ updatedAt: Number(Date.now()) });
+  next();
+});
+
 export const WaterNotesCollection = model('water', waterNoteSchema);

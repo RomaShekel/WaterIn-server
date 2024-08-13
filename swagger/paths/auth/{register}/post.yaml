@@ -1,8 +1,8 @@
 tags:
   - Auth
-summary: User rigistration
+summary: User registration
 operationId: registerUser
-description: 'User rigistration'
+description: 'User registration'
 security:
   - {}
 requestBody:
@@ -18,10 +18,12 @@ requestBody:
           email:
             description: 'User email'
             type: string
+            pattern: email
             example: 'example@mail.com'
           password:
             description: 'Account password'
             type: string
+            minimum: 8
             example: 'password321'
 responses:
   '201':

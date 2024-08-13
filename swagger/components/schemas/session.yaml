@@ -1,13 +1,21 @@
 properties:
-  user:
-    type: object
-    properties:
-      userId:
-        description: 'User id'
-        type: string
-        example: '66ae5e4b60080f8db63bb8ed'
+  userId:
+    description: 'User id'
+    type: string
+    example: '66ae5e4b60080f8db63bb8ed'
   accessToken:
     type: string
-    example: N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6
+    example: N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6 
+    description: User's access token
+  refreshToken:
+    type: string
+    example: hsDdlzeRwSh8hWOToTI9iHtzwtvg91r3BIA93li6
+    description: User's refresh token for refresh access token
+  accessTokenValidUntil:
+    type: string
+    example: 2024-08-12T20:05:10.003+00:00
+  refreshTokenValidUntil:
+    type: string
+    example: 2024-08-13T20:05:10.003+00:00
 required:
   - email

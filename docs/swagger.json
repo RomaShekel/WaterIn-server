@@ -34,9 +34,9 @@
         "tags": [
           "Auth"
         ],
-        "summary": "User rigistration",
+        "summary": "User registration",
         "operationId": "registerUser",
-        "description": "User rigistration",
+        "description": "User registration",
         "security": [
           {}
         ],
@@ -54,11 +54,13 @@
                   "email": {
                     "description": "User email",
                     "type": "string",
+                    "pattern": "email",
                     "example": "example@mail.com"
                   },
                   "password": {
                     "description": "Account password",
                     "type": "string",
+                    "minimum": 8,
                     "example": "password321"
                   }
                 }
@@ -174,11 +176,13 @@
                   "email": {
                     "description": "User email",
                     "type": "string",
+                    "pattern": "email",
                     "example": "example@mail.com"
                   },
                   "password": {
                     "description": "Account password",
                     "type": "string",
+                    "minimum": 8,
                     "example": "password321"
                   }
                 }
@@ -188,7 +192,7 @@
         },
         "responses": {
           "200": {
-            "description": "Registers a user",
+            "description": "Login a user",
             "headers": {
               "Set-Cookie": {
                 "description": "Contains session id and refresh tokens.",
@@ -292,7 +296,7 @@
         ],
         "summary": "Get count of all users",
         "operationId": "countUser",
-        "description": "Count all registered users and return 3 photo of last registered users",
+        "description": "Count all registered users and return 3 photo of random users",
         "security": [],
         "responses": {
           "200": {
@@ -327,7 +331,7 @@
                           "type": "array",
                           "items": {
                             "type": "string",
-                            "example": "https://res.cloudinary.com/dqxbq53ls/image/upload/v1722796016/hsmgrbtsalatoxwijadv.jpg",
+                            "example": "https://res.cloudinary.com/dqxbq53ls/image/upload/v1723561689/wokn8c61sgozh0cgy5go.png",
                             "description": "path to user photo"
                           }
                         }
@@ -438,16 +442,21 @@
                   "name": {
                     "description": "User's name",
                     "type": "string",
+                    "minLength": 3,
+                    "maxLength": 20,
                     "example": "John Doe"
                   },
                   "email": {
                     "description": "User's email",
                     "type": "string",
+                    "pattern": "email",
                     "example": "googl@gmail.com"
                   },
                   "sportHours": {
                     "description": "Hours of sport activities per week",
                     "type": "number",
+                    "minimum": 1,
+                    "maximum": 10,
                     "example": 5
                   },
                   "gender": {
@@ -461,12 +470,16 @@
                   "weight": {
                     "description": "User's weight in kg",
                     "type": "number",
+                    "minimum": 35,
+                    "maximum": 150,
                     "example": 70
                   },
                   "waterRate": {
                     "description": "User's daily water intake rate in milliliters",
                     "type": "number",
-                    "example": 2.5
+                    "minimum": 500,
+                    "maximum": 5000,
+                    "example": 1900
                   },
                   "photo": {
                     "description": "User's photo",
@@ -500,7 +513,8 @@
                       "example": "Successfully updated a user!"
                     },
                     "data": {
-                      "type": "object"
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
                     }
                   }
                 }
@@ -551,16 +565,6 @@
             "example": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4="
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Token refreshed successfully",
@@ -611,6 +615,91 @@
         }
       }
     },
+    "/users/refresh-user": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get refresh user data",
+        "operationId": "refreshUser",
+        "description": "Get user's refreshed data",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session ID of the user.",
+            "example": "j%3A%2266afd9c8c4e0fac0f172245c%22"
+          },
+          {
+            "in": "cookie",
+            "name": "refreshToken",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Refresh Token of user session.",
+            "example": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4="
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token refreshed successfully",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Contains session id and refresh tokens.",
+                "schema": {
+                  "type": "string",
+                  "example": "sessionId=abc123; refreshToken=abc123; Path=/; HttpOnly; Secure; SameSite=None"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/user"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
     "/water/{id}": {
       "patch": {
         "tags": [
@@ -633,6 +722,8 @@
                   "volume": {
                     "description": "Volume of water consumed in milliliters",
                     "type": "number",
+                    "minimum": 1,
+                    "maximum": 1000,
                     "example": 500
                   },
                   "drinkTime": {
@@ -778,6 +869,8 @@
                   "volume": {
                     "description": "Volume of water consumed in milliliters",
                     "type": "number",
+                    "minimum": 1,
+                    "maximum": 1000,
                     "example": 500
                   },
                   "drinkTime": {
@@ -1001,34 +1094,43 @@
               "name": {
                 "description": "User name",
                 "type": "string",
+                "minLength": 3,
+                "maxLength": 20,
                 "example": "John Doe",
                 "default": "User"
               },
               "email": {
                 "description": "User email",
                 "type": "string",
+                "pattern": "email",
                 "example": "example@mail.com"
               },
               "photo": {
                 "description": "Link to user's photo",
                 "type": "string",
-                "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+                "example": "https://res.cloudinary.com/dqxbq53ls/image/upload/v1723561689/wokn8c61sgozh0cgy5go.png"
               },
               "sportHours": {
                 "description": "User's sport hours",
                 "type": "number",
+                "minimum": 1,
+                "maximum": 10,
                 "example": 2,
                 "default": 0
               },
               "weight": {
                 "description": "User's weight",
                 "type": "number",
+                "minimum": 35,
+                "maximum": 150,
                 "example": 82,
                 "default": 0
               },
               "waterRate": {
                 "description": "Amount of water",
                 "type": "number",
+                "minimum": 500,
+                "maximum": 5000,
                 "example": 1500,
                 "default": 1500
               },
@@ -1040,6 +1142,11 @@
                   "man"
                 ],
                 "default": "woman"
+              },
+              "isGoogleUser": {
+                "description": "Is user registered trow google auth",
+                "type": "boolean",
+                "default": false
               }
             }
           },
@@ -1054,19 +1161,28 @@
       },
       "session": {
         "properties": {
-          "user": {
-            "type": "object",
-            "properties": {
-              "userId": {
-                "description": "User id",
-                "type": "string",
-                "example": "66ae5e4b60080f8db63bb8ed"
-              }
-            }
+          "userId": {
+            "description": "User id",
+            "type": "string",
+            "example": "66ae5e4b60080f8db63bb8ed"
           },
           "accessToken": {
             "type": "string",
-            "example": "N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6"
+            "example": "N+DdlzeRwSh8hWOToTI9iHtzFyi201r3BIA93li6",
+            "description": "User's access token"
+          },
+          "refreshToken": {
+            "type": "string",
+            "example": "hsDdlzeRwSh8hWOToTI9iHtzwtvg91r3BIA93li6",
+            "description": "User's refresh token for refresh access token"
+          },
+          "accessTokenValidUntil": {
+            "type": "string",
+            "example": "2024-08-12T20:05:10.003+00:00"
+          },
+          "refreshTokenValidUntil": {
+            "type": "string",
+            "example": "2024-08-13T20:05:10.003+00:00"
           }
         },
         "required": [
@@ -1089,7 +1205,9 @@
           "volume": {
             "description": "Volume of water consumed in milliliters",
             "type": "number",
-            "example": 500
+            "example": 500,
+            "minimum": 1,
+            "maximum": 1000
           },
           "drinkTime": {
             "description": "Time when the water was consumed",

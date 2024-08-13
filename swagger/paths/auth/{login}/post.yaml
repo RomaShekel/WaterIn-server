@@ -17,14 +17,16 @@ requestBody:
           email:
             description: 'User email'
             type: string
+            pattern: email
             example: 'example@mail.com'
           password:
             description: 'Account password'
             type: string
+            minimum: 8
             example: 'password321'
 responses:
   '200':
-    description: Registers a user
+    description: Login a user
     headers:
       Set-Cookie:
         description: Contains session id and refresh tokens.
