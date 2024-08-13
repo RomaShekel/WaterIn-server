@@ -44,21 +44,17 @@ export const getWaterPerDay = async (userId, day) => {
   .where('createdAt')
   .gte(dayStartInUnix)
   .lte(dayEndInUnix)
-  .sort({createdAt: 1})
   .sort({drinkTime: 1})
-// console.log(dayWater)
+
   return dayWater;
 }
 
 export const getWaterPerMonth = async (userId, userNorm = 1500, time) => {
   const date = new Date(time);
-// console.log(format(date, 'yyyy-MM-dd'))
-// console.log(typeof userId )
+
   const resetMonth = startOfMonth(date);
   const endMonth = endOfMonth(date)
 
-  // console.log(resetMonth)
-  // console.log(endMonth)
   const monthStartInUnix = getUnixTime(resetMonth) * 1000;
   const monthEndInUnix = getUnixTime(endMonth) * 1000;
 
