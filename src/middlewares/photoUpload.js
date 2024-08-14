@@ -12,7 +12,6 @@ const storage = multer.diskStorage({
 });
 
 const limits = {
-  // 5Mb
   fileSize: 1024 * 1024 * 5,
 };
 

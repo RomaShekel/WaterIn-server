@@ -50,14 +50,4 @@ router.post(
 
 router.post('/refresh-user', ctrlWrapper(refreshUserController));
 
-// router.post(
-//     '/send-reset-email',
-//     validateBody(),
-//     ctrlWrapper())
-
-// router.post(
-//     '/reset-pwd',
-//     validateBody(),
-//     ctrlWrapper())
-
 export default router;

@@ -48,7 +48,6 @@ export const getTotalUsers = async () => {
 
   const photos = treeLastUsers.map(user => { return user.photo});
   
-  console.log(photos)
   return {
     count: count,
     photos: photos,

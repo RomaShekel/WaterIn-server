@@ -24,8 +24,6 @@ export const updateWaterController = async (req, res, next) => {
   const { waterId } = req.params;
 
   const userId = req.user._id;
-  console.log(userId);
-  console.log(req.body);
 
   const data = await updateWaterNote(
     {
@@ -101,7 +99,6 @@ export const getWaterPerMonthController = async (req, res, next) => {
   const time = Number(req.params.time);
   const normalFormat = format(time, 'yyyy-MM-dd');
   const monthWaterNotes = await getWaterPerMonth(userId, userNorm, time);
-  console.log(monthWaterNotes);
 
   if (monthWaterNotes.length === 0) {
     res.status(200).json({

@@ -4,7 +4,6 @@ import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import saveFileToPublicDir from '../utils/saveFileToPublicDir.js';
 import { env } from '../utils/env.js';
 
-// get User info
 
 export const getUserProfileController = async (req, res, next) => {
   const { userId } = req.params;
@@ -21,7 +20,6 @@ export const getUserProfileController = async (req, res, next) => {
   });
 };
 
-// update User info
 
 export const updateUserProfileController = async (req, res, next) => {
   const { userId } = req.params;

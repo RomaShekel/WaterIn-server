@@ -70,12 +70,12 @@ export const logoutUserController = async (req, res) => {
   res.clearCookie('sessionId', {
     httpOnly: true,
     sameSite: 'None',
-    secure: process.env.NODE_ENV === 'production', // true тільки в продакшн
+    secure: process.env.NODE_ENV === 'production',
   });
   res.clearCookie('refreshToken', {
     httpOnly: true,
     sameSite: 'None',
-    secure: process.env.NODE_ENV === 'production', //true тільки в продакшн
+    secure: process.env.NODE_ENV === 'production',
   });
 
   res.status(204).send();
@@ -113,7 +113,6 @@ export const refreshUserController = async (req, res) => {
   }
 
   const user = await refreshUser(sessionId, refreshToken);
-  console.log(user);
 
   if (user === null || !user) {
     res.status(207);

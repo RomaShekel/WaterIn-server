@@ -10,14 +10,10 @@ import {
 
 export const addWaterNote = async (note) => {
   const data = await WaterNotesCollection.create(note);
-  console.log(note);
-  console.log(Date.now())
   return data;
 };
 
 export const updateWaterNote = async (filter, payload, options) => {
-  console.log(payload);
-  console.log(Date.now())
   const data = await WaterNotesCollection.findOneAndUpdate(filter, payload, {
     ...options,
   });
@@ -104,12 +100,10 @@ export const getWaterPerMonth = async (userId, userNorm = 1500, time) => {
     dates.push({ date: format(currentDate, 'yyyy-MM-dd'), dayVolume: 0, percent: 0 });
     currentDate = currentDate + 86400000;
   }
-  console.log(dates);
   
   const result = dates.map(date => {
     const entry = monthWater.find(item => item.date === date.date);
     return entry ? entry : { ...date };
   });
-  console.log(result)
   return result;
 }

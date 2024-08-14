@@ -125,7 +125,6 @@ export const refreshUser = async (sessionId, refreshToken) => {
   if (!session) {
     return null;
   }
-console.log(session)
   const isRefreshTokenExpired = new Date() > new Date(session.refreshTokenValidUntil);
 
   if(isRefreshTokenExpired) {
