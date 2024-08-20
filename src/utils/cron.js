@@ -18,7 +18,7 @@ console.log(reminders)
             html: `<h1>Pleas drink your water</h1>`,
         })
 
-        // reminder.isSended = true
-        // await reminder.save()
+        reminder.isSended = true
+        await reminder.save()
     })
 })
