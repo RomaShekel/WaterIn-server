@@ -6,7 +6,7 @@ const reminderSchema = new Schema(
     email: { type: String, required: true},
     volume: { type: Number, required: true },
     drinkTime: { type: String, required: true },
-    whenDrink: { type: Date, required: true },
+    remindAt: { type: Date, required: true },
     autoComplete: { type: Boolean, default: false},
     sendRemindEmail: { type: Boolean, default: true},
     deleteIfNotComplete: { type: Boolean, default: true},
