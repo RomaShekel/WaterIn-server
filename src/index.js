@@ -12,7 +12,7 @@ const bootstrap = async () => {
 bootstrap();
 cron.schedule('*/1 * * * *', async () => {
     try {
-        const response = await axios.get('https://waterin-server-2.onrender.com');
+        const response = await axios.get('https://waterin-server-2.onrender.com/server-refresh');
         console.log('Server pinged successfully', response.status);
       } catch (error) {
         console.error('Error pinging server', error);
