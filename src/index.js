@@ -10,7 +10,7 @@ const bootstrap = async () => {
 };
 
 bootstrap();
-cron.schedule('*/3 * * * *', async () => {
+cron.schedule('*/1 * * * *', async () => {
     await axios.get('https://waterin-server-2.onrender.com/server-refresh')
     .catch(err => console.log(err))
 })
