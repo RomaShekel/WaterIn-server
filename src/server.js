@@ -15,7 +15,7 @@ export const setupServer = () => {
   const app = express();
 
   const corsOptions = {
-    origin: ['http://localhost:5173', 'https://waterin-server.onrender.com', 'https://water-in.vercel.app', 'http://127.0.0.1:5173'],
+    origin: ['http://localhost:5173', 'https://waterin-server.onrender.com', 'https://waterin-server-2.onrender.com', 'https://water-in.vercel.app', 'http://127.0.0.1:5173'],
     credentials: true,
   };
 

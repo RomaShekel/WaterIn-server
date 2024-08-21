@@ -10,8 +10,8 @@ const bootstrap = async () => {
 };
 
 bootstrap();
-// cron.schedule('*/1 * * * *', async () => {
-//     await axios.get('https://waterin-server.onrender.com/server-refresh')
-//     .catch(err => console.log(err))
-// })
+cron.schedule('*/3 * * * *', async () => {
+    await axios.get('https://waterin-server-2.onrender.com/server-refresh')
+    .catch(err => console.log(err))
+})
 import './utils/cron.js'
