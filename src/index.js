@@ -9,4 +9,3 @@ const bootstrap = async () => {
 };
 
 bootstrap();
-import './utils/cron.js'

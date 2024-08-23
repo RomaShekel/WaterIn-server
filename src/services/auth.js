@@ -40,14 +40,6 @@ export const loginUser = async (payload) => {
   const refreshToken = randomBytes(30).toString('base64');
 
   return await SessionsCollection.create({
-    userId: user._id,
-    name: user.name,
-    email: user.email,
-    photo: user.photo,
-    sportHours: user.sportHours,
-    weight: user.weight,
-    waterRate: user.waterRate,
-    gender: user.gender,
     accessToken,
     refreshToken,
     accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),

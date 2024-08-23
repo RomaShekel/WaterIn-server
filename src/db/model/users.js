@@ -12,10 +12,6 @@ const usersSchema = new Schema(
       default:
         'https://res.cloudinary.com/dqxbq53ls/image/upload/v1723561689/wokn8c61sgozh0cgy5go.png',
     },
-    sportHours: { type: Number, default: 0 },
-    weight: { type: Number, default: 0 },
-    waterRate: { type: Number, default: 1500 },
-    gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
     isVerified: {
       type: Boolean,
       default: false,
