@@ -8,7 +8,6 @@ import {
 } from "../services/boards.js";
 
 export const getUsersBoardsController = async (req, res, next) => {
-  console.log(req)
     
     const userId = req.user._id;
     const boards = await getUsersBoards(userId)
@@ -35,7 +34,8 @@ export const getBoardController = async (req, res, next) => {
 
 export const createBoardController = async (req, res, next) => {
     const payload = req.body;
-    const board = await createBoard(payload)
+    const userId = req.user._id;
+    const board = await createBoard({...payload, userId})
 
     if(!board) {
         next(createHttpError(500, "Board wasn't created cause server error"))

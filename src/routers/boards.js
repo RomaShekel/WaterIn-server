@@ -7,8 +7,10 @@ import {
     getUsersBoardsController
 } from "../controllers/boards.js";
 import { ctrlWrapper } from "../utils/ctrlWrapper.js";
+import { authenticate } from "../middlewares/authenticate.js";
 
 const router = Router();
+router.use(authenticate)
 
 router.get('/boardId', ctrlWrapper(getBoardController))
 router.get('/', ctrlWrapper(getUsersBoardsController))

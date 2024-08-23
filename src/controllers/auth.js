@@ -27,10 +27,6 @@ export const registerUserController = async (req, res) => {
     name: user.name,
     email: user.email,
     photo: user.photo,
-    sportHours: user.sportHours,
-    weight: user.weight,
-    waterRate: user.waterRate,
-    gender: user.gender,
   };
 
   res.status(201).json({

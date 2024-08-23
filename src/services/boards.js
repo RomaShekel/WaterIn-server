@@ -5,19 +5,22 @@ export const getUsersBoards = async (userId) => {
     const boards = await BoardsCollection.find({ userId })
     if(boards.length === 0) return []
     if(!boards) {
-        createHttpError(500, "Server error, user's boards not found")
+      throw  createHttpError(500, "Server error, user's boards not found")
     }
     return boards;
 }
 
 export const getBoard = async (boardId) => {
     const board = await BoardsCollection.findById(boardId);
-    if(!board) createHttpError(404, "Board not found");
+    if(!board) throw createHttpError(404, "Board not found");
 
     return board;
 }
 
 export const createBoard = async (payload) => {
+    const boardName = await BoardsCollection.findOne({name:payload.name})
+    if(boardName) throw createHttpError(409, "Board name mast be unique!")
+        
     const board = await BoardsCollection.create(payload);
     return board;
 }

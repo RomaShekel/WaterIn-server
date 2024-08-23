@@ -5,7 +5,7 @@ const columnSchema = new Schema(
     userId: { type: String, ref: 'users'},
     boardId: { type: String, ref: 'boards'},
     name: { type: String, required: true},
-    cards: { type: Array, ref: 'cards'},
+    cards: { type: Array, ref: 'cards', default: []},
   },
   {
     timestamps: true,
