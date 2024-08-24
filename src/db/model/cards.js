@@ -13,6 +13,10 @@ const cardsSchema = new Schema(
             required: true
         },
         deadline: { type: Date, required: true}
+    },
+    {
+        timestamps: true,
+        versionKey: false
     }
 )
 
