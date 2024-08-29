@@ -42,7 +42,7 @@ export const loginUserController = async (req, res) => {
   setupSession(res, session);
 
   const user = {
-    userId: session.userId,
+    userId: session.user,
   };
 
   res.json({

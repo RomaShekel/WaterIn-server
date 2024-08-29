@@ -40,6 +40,7 @@ export const loginUser = async (payload) => {
   const refreshToken = randomBytes(30).toString('base64');
 
   return await SessionsCollection.create({
+    user: user,
     userId: user._id,
     accessToken,
     refreshToken,
